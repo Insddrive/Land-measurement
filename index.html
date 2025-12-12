@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pa">
+<html lang="pa" style="background-color: #f8fafc;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,10 +8,11 @@
     <!-- SEO Tags -->
     <title>Land Calculator Punjabi - Inderjeet Singh Talwandi Sabo</title>
     <meta name="description" content="Best Punjabi Land Calculator App. Calculate Killa, Kanal, Marla offline.">
+    <meta name="google-site-verification" content="google-site-verification-code-here" />
     
     <!-- iOS Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
 
@@ -24,13 +25,19 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         
+        /* HTML and Body styling specifically to prevent black flash */
+        html, body {
+            background-color: var(--bg-color);
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+        }
+        
         body { 
-            background-color: var(--bg-color); 
             padding: 16px; 
-            height: 100vh; 
             display: flex;
             flex-direction: column;
-            overflow-y: auto; 
         }
 
         .container { 
@@ -79,40 +86,21 @@
         /* Icons */
         svg { width: 16px; height: 16px; stroke-width: 2.5; }
 
-        /* ---------------- INSTALL MODAL STYLES ---------------- */
+        /* INSTALL MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            display: none; /* Hidden by default */
-            align-items: center; justify-content: center;
-            z-index: 1000;
-            backdrop-filter: blur(3px);
-            padding: 20px;
+            background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center;
+            z-index: 1000; backdrop-filter: blur(3px); padding: 20px;
         }
         .modal-box {
-            background: white;
-            padding: 24px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 320px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: white; padding: 24px; border-radius: 20px; width: 100%; max-width: 320px;
+            text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes popUp {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .modal-icon {
-            background: #dcfce7; color: #15803d;
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 16px auto;
-        }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-icon { background: #dcfce7; color: #15803d; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; }
         .modal-title { font-size: 1.25rem; font-weight: 800; color: #15803d; margin-bottom: 8px; }
         .modal-desc { font-size: 0.9rem; color: #64748b; margin-bottom: 24px; line-height: 1.4; }
-        
         .modal-actions { display: flex; gap: 12px; }
         .btn-install-app { flex: 1; background: #15803d; color: white; padding: 12px; border-radius: 12px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(21, 128, 61, 0.2); }
         .btn-close-modal { flex: 1; background: #f1f5f9; color: #64748b; padding: 12px; border-radius: 12px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; }
@@ -126,7 +114,6 @@
         <svg style="width:22px; height:22px; opacity:0.9" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
     </div>
 
-    <!-- Main Grid -->
     <div class="grid-2">
         <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
         <div class="card c-orange"><div class="label">ਵਿੱਘਾ (Bigha)</div><input type="number" id="vigha" class="input-val" placeholder="0" oninput="calculate('vigha', this.value)"></div>
@@ -144,7 +131,6 @@
         <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="sqKm" class="input-val" placeholder="0" oninput="calculate('sqKm', this.value)"></div>
     </div>
 
-    <!-- Dimensions -->
     <div class="dims-wrapper">
         <div class="dim-box">
             <div class="dim-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
@@ -166,101 +152,100 @@
 
     <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset)</button>
 
-    <!-- Footer -->
     <div class="footer">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p>Contact - 94644-91806</p>
     </div>
 </div>
 
-<!-- INSTALL MODAL HTML -->
 <div id="installModal" class="modal-overlay">
     <div class="modal-box">
-        <div class="modal-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:32px; height:32px;"><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5"/><path d="M12 3v13.5"/><path d="M16.5 12 12 16.5 7.5 12"/></svg>
-        </div>
+        <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:32px; height:32px;"><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5"/><path d="M12 3v13.5"/><path d="M16.5 12 12 16.5 7.5 12"/></svg></div>
         <div class="modal-title">ਐਪ ਇੰਸਟਾਲ ਕਰੋ (Install App)</div>
         <p class="modal-desc">ਇੰਟਰਨੈੱਟ ਤੋਂ ਬਿਨਾਂ ਚਲਾਉਣ ਲਈ ਇਸਨੂੰ ਆਪਣੇ ਫੋਨ ਵਿੱਚ ਸੇਵ ਕਰੋ।</p>
-        <div class="modal-actions">
-            <button class="btn-close-modal" onclick="closeModal()">ਬਾਅਦ ਵਿੱਚ</button>
-            <button class="btn-install-app" onclick="installApp()">ਇੰਸਟਾਲ ਕਰੋ</button>
-        </div>
+        <div class="modal-actions"><button class="btn-close-modal" onclick="closeModal()">ਬਾਅਦ ਵਿੱਚ</button><button class="btn-install-app" onclick="installApp()">ਇੰਸਟਾਲ ਕਰੋ</button></div>
     </div>
 </div>
 
 <script>
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js').catch(() => {});
-        });
+        window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
     }
 
-    // --- INSTALLATION LOGIC ---
     let deferredPrompt;
     const installModal = document.getElementById('installModal');
+    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; installModal.style.display = 'flex'; });
+    async function installApp() { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; deferredPrompt = null; } closeModal(); }
+    function closeModal() { installModal.style.display = 'none'; }
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome from showing the mini-infobar immediately
-        e.preventDefault();
-        // Save event
-        deferredPrompt = e;
-        // Show our custom modal
-        installModal.style.display = 'flex';
-    });
-
-    async function installApp() {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`User response: ${outcome}`);
-            deferredPrompt = null;
-        }
-        closeModal();
-    }
-
-    function closeModal() {
-        installModal.style.display = 'none';
-    }
-
-    // --- CALCULATOR LOGIC ---
     const RATES = { marla: 272.25, kanal: 5445, killa: 43560, vigha: 10890, gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, sqFt: 1, sqKaram: 30.25 };
     const inputs = { killa: document.getElementById('killa'), vigha: document.getElementById('vigha'), kanal: document.getElementById('kanal'), marla: document.getElementById('marla'), gaj: document.getElementById('gaj'), sqFt: document.getElementById('sqFt'), sqMeter: document.getElementById('sqMeter'), sqKm: document.getElementById('sqKm') };
     const karamInputs = { length: document.getElementById('karamLength'), width: document.getElementById('karamWidth') };
     const feetInputs = { length: document.getElementById('feetLength'), width: document.getElementById('feetWidth') };
 
-    function updateAllFields(inSqFt) {
-        inputs.sqFt.value = inSqFt === '' ? '' : parseFloat(inSqFt.toFixed(2));
-        inputs.killa.value = inSqFt === '' ? '' : parseFloat((inSqFt / RATES.killa).toFixed(4));
-        inputs.kanal.value = inSqFt === '' ? '' : parseFloat((inSqFt / RATES.kanal).toFixed(4));
-        inputs.marla.value = inSqFt === '' ? '' : parseFloat((inSqFt / RATES.marla).toFixed(4));
-        inputs.vigha.value = inSqFt === '' ? '' : parseFloat((inSqFt / RATES.vigha).toFixed(4));
-        inputs.gaj.value = inSqFt === '' ? '' : parseFloat((inSqFt / RATES.gaj).toFixed(2));
-        inputs.sqMeter.value = inSqFt === '' ? '' : parseFloat((inSqFt / RATES.sqMeter).toFixed(2));
-        inputs.sqKm.value = inSqFt === '' ? '' : parseFloat((inSqFt / RATES.sqKm).toFixed(7));
+    const fmt = (val, fixed) => val === '' ? '' : parseFloat(val.toFixed(fixed));
+
+    function updateAllFields(inSqFt, sourceKey = null) {
+        if (inSqFt === '') {
+            Object.keys(inputs).forEach(k => { if (k !== sourceKey) inputs[k].value = ''; });
+            return;
+        }
+        if (sourceKey !== 'sqFt') inputs.sqFt.value = fmt(inSqFt, 2);
+        if (sourceKey !== 'killa') inputs.killa.value = fmt(inSqFt / RATES.killa, 4);
+        if (sourceKey !== 'kanal') inputs.kanal.value = fmt(inSqFt / RATES.kanal, 4);
+        if (sourceKey !== 'marla') inputs.marla.value = fmt(inSqFt / RATES.marla, 4);
+        if (sourceKey !== 'vigha') inputs.vigha.value = fmt(inSqFt / RATES.vigha, 4);
+        if (sourceKey !== 'gaj') inputs.gaj.value = fmt(inSqFt / RATES.gaj, 2);
+        if (sourceKey !== 'sqMeter') inputs.sqMeter.value = fmt(inSqFt / RATES.sqMeter, 2);
+        if (sourceKey !== 'sqKm') inputs.sqKm.value = fmt(inSqFt / RATES.sqKm, 7);
     }
+
     function calculate(unit, value) {
-        karamInputs.length.value = ''; karamInputs.width.value = ''; feetInputs.length.value = ''; feetInputs.width.value = '';
-        if (value === '') { updateAllFields(''); return; }
-        const numValue = parseFloat(value);
-        if (isNaN(numValue)) return;
-        updateAllFields(numValue * RATES[unit]);
+        karamInputs.length.value = ''; karamInputs.width.value = ''; 
+        feetInputs.length.value = ''; feetInputs.width.value = '';
+
+        if (value === '') { updateAllFields('', unit); return; }
+        if (value === '.') return;
+
+        let numValue = parseFloat(value);
+        if (isNaN(numValue)) numValue = 0;
+
+        const inSqFt = numValue * RATES[unit];
+        updateAllFields(inSqFt, unit);
     }
+
     function calculateFeet() {
-        const len = parseFloat(feetInputs.length.value); const wid = parseFloat(feetInputs.width.value);
+        const lenVal = feetInputs.length.value;
+        const widVal = feetInputs.width.value;
+        const len = parseFloat(lenVal);
+        const wid = parseFloat(widVal);
+
         if (!isNaN(len)) karamInputs.length.value = parseFloat((len / 5.5).toFixed(2));
+        else if (lenVal === '') karamInputs.length.value = '';
+        
         if (!isNaN(wid)) karamInputs.width.value = parseFloat((wid / 5.5).toFixed(2));
-        if (feetInputs.length.value === '') karamInputs.length.value = '';
-        if (feetInputs.width.value === '') karamInputs.width.value = '';
-        if (!isNaN(len) && !isNaN(wid)) updateAllFields(len * wid);
+        else if (widVal === '') karamInputs.width.value = '';
+
+        if (!isNaN(len) && !isNaN(wid)) updateAllFields(len * wid, 'feet');
+        else updateAllFields('', 'feet');
     }
+
     function calculateKarams() {
-        const len = parseFloat(karamInputs.length.value); const wid = parseFloat(karamInputs.width.value);
+        const lenVal = karamInputs.length.value;
+        const widVal = karamInputs.width.value;
+        const len = parseFloat(lenVal);
+        const wid = parseFloat(widVal);
+
         if (!isNaN(len)) feetInputs.length.value = parseFloat((len * 5.5).toFixed(2));
+        else if (lenVal === '') feetInputs.length.value = '';
+
         if (!isNaN(wid)) feetInputs.width.value = parseFloat((wid * 5.5).toFixed(2));
-        if (karamInputs.length.value === '') feetInputs.length.value = '';
-        if (karamInputs.width.value === '') feetInputs.width.value = '';
-        if (!isNaN(len) && !isNaN(wid)) updateAllFields(len * wid * RATES.sqKaram);
+        else if (widVal === '') feetInputs.width.value = '';
+
+        if (!isNaN(len) && !isNaN(wid)) updateAllFields(len * wid * RATES.sqKaram, 'karams');
+        else updateAllFields('', 'karams');
     }
+
     function resetAll() {
         Object.values(inputs).forEach(input => input.value = '');
         karamInputs.length.value = ''; karamInputs.width.value = '';
