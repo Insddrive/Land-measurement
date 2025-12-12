@@ -1,26 +1,27 @@
-// Version change is important here (v1 -> v2)
-const CACHE_NAME = 'land-calc-v2'; 
+const CACHE_NAME = 'land-calc-v5'; // Version 5
 
-const ASSETS_TO_CACHE = [
+const REQUIRED_ASSETS = [
   './',
   './index.html',
-  './manifest.json',
+  './manifest.json'
+];
+
+// Optional assets
+const OPTIONAL_ASSETS = [
   './icon-192.png',
   './icon-512.png'
 ];
 
-// Install Event - Cache Files
 self.addEventListener('install', (event) => {
-  self.skipWaiting(); // Force new service worker to activate immediately
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('Caching assets');
-      return cache.addAll(ASSETS_TO_CACHE);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await cache.addAll(REQUIRED_ASSETS);
+      try { await cache.addAll(OPTIONAL_ASSETS); } catch (e) {}
     })
   );
 });
 
-// Activate Event - Clean old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -29,15 +30,13 @@ self.addEventListener('activate', (event) => {
       );
     })
   );
-  return self.clients.claim(); // Take control of all clients immediately
+  return self.clients.claim();
 });
 
-// Fetch Event - Serve from Cache (Offline Support)
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // If online, update the cache with the fresh version
         const responseClone = response.clone();
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, responseClone);
@@ -45,7 +44,6 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        // If offline, return cached version
         return caches.match(event.request);
       })
   );
