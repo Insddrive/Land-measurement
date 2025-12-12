@@ -76,7 +76,14 @@
         /* Dims */
         .dims-wrapper { display: flex; flex-direction: column; gap: 12px; margin-top: 5px; }
         .dim-box { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); }
-        .dim-header { background: var(--dim-header); padding: 8px 16px; font-size: 0.8rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+        
+        .dim-header { padding: 10px 16px; font-size: 0.9rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 8px; }
+        
+        /* Colored Headers */
+        .header-green { background-color: #15803d; }
+        .header-blue { background-color: #2563eb; }
+        .header-purple { background-color: #7e22ce; } /* Changed to Purple */
+
         .dim-row { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
         .dim-col { flex: 1; }
         .dim-col label { display: block; font-size: 0.65rem; color: var(--text-sub); font-weight: 700; margin-left: 4px; margin-bottom: 4px; }
@@ -102,7 +109,7 @@
         .btn-ib-install { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; }
         .btn-ib-close { background: transparent; border: none; color: var(--text-sub); font-size: 1.2rem; }
 
-        svg { width: 18px; height: 18px; stroke-width: 2.5; }
+        svg { width: 18px; height: 18px; stroke-width: 2.5; stroke: white; } /* Icons white in headers */
     </style>
 </head>
 <body>
@@ -133,27 +140,27 @@
 
     <!-- Dimensions -->
     <div class="dims-wrapper">
-        <!-- Feet -->
+        <!-- Feet (Green Header) -->
         <div class="dim-box">
-            <div class="dim-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
+            <div class="dim-header header-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
             <div class="dim-row">
                 <div class="dim-col"><label>ਲੰਬਾਈ (Len)</label><input type="number" id="feetLength" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
                 <div class="x-sym">×</div>
                 <div class="dim-col"><label>ਚੌੜਾਈ (Wid)</label><input type="number" id="feetWidth" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
             </div>
         </div>
-        <!-- Meters -->
+        <!-- Meters (Blue Header) -->
         <div class="dim-box">
-            <div class="dim-header" style="color: #0d9488;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ (By Meters)</div>
+            <div class="dim-header header-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ (By Meters)</div>
             <div class="dim-row">
                 <div class="dim-col"><label>ਲੰਬਾਈ (Len)</label><input type="number" id="meterLength" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
                 <div class="x-sym">×</div>
                 <div class="dim-col"><label>ਚੌੜਾਈ (Wid)</label><input type="number" id="meterWidth" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
             </div>
         </div>
-        <!-- Karams -->
-        <div class="dim-box blue-theme">
-            <div class="dim-header" style="color: #2563eb;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.8">1K = 5.5ft</span></div>
+        <!-- Karams (Purple Header) -->
+        <div class="dim-box">
+            <div class="dim-header header-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.9">1K = 5.5ft</span></div>
             <div class="dim-row">
                 <div class="dim-col"><label>ਲੰਬਾਈ (Len)</label><input type="number" id="karamLength" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
                 <div class="x-sym">×</div>
@@ -167,7 +174,7 @@
     <div class="footer">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p>Contact - 94644-91806</p>
-        <span class="version">Version 2.0</span>
+        <span class="version">Version 2.7</span>
     </div>
 </div>
 
@@ -236,35 +243,14 @@
     }
 
     function syncDimensions(lenFeet, widFeet, source) {
-        if (source !== 'feet') {
-             if (!isNaN(lenFeet)) feetInputs.length.value = fmt(lenFeet, 2);
-             if (!isNaN(widFeet)) feetInputs.width.value = fmt(widFeet, 2);
-             if (source === 'reset') { feetInputs.length.value = ''; feetInputs.width.value = ''; }
-        }
-        if (source !== 'karams') {
-            if (!isNaN(lenFeet)) karamInputs.length.value = fmt(lenFeet / 5.5, 2);
-            if (!isNaN(widFeet)) karamInputs.width.value = fmt(widFeet / 5.5, 2);
-            if (source === 'reset') { karamInputs.length.value = ''; karamInputs.width.value = ''; }
-        }
-        if (source !== 'meters') {
-            if (!isNaN(lenFeet)) meterInputs.length.value = fmt(lenFeet / METER_TO_FEET, 2);
-            if (!isNaN(widFeet)) meterInputs.width.value = fmt(widFeet / METER_TO_FEET, 2);
-            if (source === 'reset') { meterInputs.length.value = ''; meterInputs.width.value = ''; }
-        }
+        if (source !== 'feet') { if (!isNaN(lenFeet)) feetInputs.length.value = fmt(lenFeet, 2); if (!isNaN(widFeet)) feetInputs.width.value = fmt(widFeet, 2); if (source === 'reset') { feetInputs.length.value = ''; feetInputs.width.value = ''; } }
+        if (source !== 'karams') { if (!isNaN(lenFeet)) karamInputs.length.value = fmt(lenFeet / 5.5, 2); if (!isNaN(widFeet)) karamInputs.width.value = fmt(widFeet / 5.5, 2); if (source === 'reset') { karamInputs.length.value = ''; karamInputs.width.value = ''; } }
+        if (source !== 'meters') { if (!isNaN(lenFeet)) meterInputs.length.value = fmt(lenFeet / METER_TO_FEET, 2); if (!isNaN(widFeet)) meterInputs.width.value = fmt(widFeet / METER_TO_FEET, 2); if (source === 'reset') { meterInputs.length.value = ''; meterInputs.width.value = ''; } }
     }
 
-    function calculateFeet() {
-        const l = parseFloat(feetInputs.length.value), w = parseFloat(feetInputs.width.value);
-        if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } else { updateAllFields('', 'feet'); if(feetInputs.length.value==='' && feetInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); }
-    }
-    function calculateKarams() {
-        const l = parseFloat(karamInputs.length.value), w = parseFloat(karamInputs.width.value);
-        if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } else { updateAllFields('', 'karams'); if(karamInputs.length.value==='' && karamInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); }
-    }
-    function calculateMeters() {
-        const l = parseFloat(meterInputs.length.value), w = parseFloat(meterInputs.width.value);
-        if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } else { updateAllFields('', 'meters'); if(meterInputs.length.value==='' && meterInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); }
-    }
+    function calculateFeet() { const l = parseFloat(feetInputs.length.value), w = parseFloat(feetInputs.width.value); if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } else { updateAllFields('', 'feet'); if(feetInputs.length.value==='' && feetInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); } }
+    function calculateKarams() { const l = parseFloat(karamInputs.length.value), w = parseFloat(karamInputs.width.value); if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } else { updateAllFields('', 'karams'); if(karamInputs.length.value==='' && karamInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); } }
+    function calculateMeters() { const l = parseFloat(meterInputs.length.value), w = parseFloat(meterInputs.width.value); if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } else { updateAllFields('', 'meters'); if(meterInputs.length.value==='' && meterInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); } }
     function resetAll() { Object.values(inputs).forEach(input => input.value = ''); syncDimensions(NaN, NaN, 'reset'); }
 </script>
 
