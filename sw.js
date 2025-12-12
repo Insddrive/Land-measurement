@@ -1,4 +1,4 @@
-const CACHE_NAME = 'land-calc-v8'; // Version 8
+const CACHE_NAME = 'land-calc-v9'; // Version bumped to v9
 
 const REQUIRED_ASSETS = [
   './',
