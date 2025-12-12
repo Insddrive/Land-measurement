@@ -1,4 +1,4 @@
-const CACHE_NAME = 'land-calc-v10'; // ਇਹ v10 ਕਰਨਾ ਬਹੁਤ ਜ਼ਰੂਰੀ ਹੈ
+const CACHE_NAME = 'land-calc-v11';
 
 const REQUIRED_ASSETS = [
   './',
@@ -12,7 +12,7 @@ const OPTIONAL_ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
-  self.skipWaiting(); // ਇਹ ਲਾਈਨ ਪੁਰਾਣੇ ਚੌਕੀਦਾਰ ਨੂੰ ਤੁਰੰਤ ਹਟਾ ਦੇਵੇਗੀ
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
       await cache.addAll(REQUIRED_ASSETS);
