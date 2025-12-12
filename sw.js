@@ -1,4 +1,4 @@
-const CACHE_NAME = 'land-calc-v5'; // Version 5
+const CACHE_NAME = 'land-calc-v7'; // Version 7
 
 const REQUIRED_ASSETS = [
   './',
@@ -6,7 +6,6 @@ const REQUIRED_ASSETS = [
   './manifest.json'
 ];
 
-// Optional assets
 const OPTIONAL_ASSETS = [
   './icon-192.png',
   './icon-512.png'
@@ -16,7 +15,9 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
+      // ਜ਼ਰੂਰੀ ਫਾਈਲਾਂ ਕੈਸ਼ ਕਰੋ
       await cache.addAll(REQUIRED_ASSETS);
+      // ਆਪਸ਼ਨਲ ਫਾਈਲਾਂ (ਜੇ ਹੋਣ)
       try { await cache.addAll(OPTIONAL_ASSETS); } catch (e) {}
     })
   );
@@ -33,20 +34,16 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
+// Cache First Strategy (ਸਭ ਤੋਂ ਤੇਜ਼)
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+    caches.match(event.request).then((cachedResponse) => {
+      // ਜੇ ਕੈਸ਼ ਵਿੱਚ ਹੈ, ਤਾਂ ਉੱਥੋਂ ਚਲਾਓ (ਕੋਈ ਇੰਤਜ਼ਾਰ ਨਹੀਂ)
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      // ਨਹੀਂ ਤਾਂ ਨੈੱਟਵਰਕ ਤੋਂ ਲਿਆਓ
+      return fetch(event.request);
+    })
   );
 });
-
-
