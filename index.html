@@ -4,28 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#15803d">
+    
+    <!-- SEO & Search Engine Tags (ਇਹ ਗੂਗਲ ਸਰਚ ਲਈ ਜ਼ਰੂਰੀ ਹਨ) -->
+    <title>Land Calculator Punjabi - Inderjeet Singh Talwandi Sabo</title>
+    <meta name="description" content="Best Punjabi Land Calculator App by Inderjeet Singh Talwandi Sabo. Calculate Killa, Kanal, Marla, Karam, Feet offline. ਜਮੀਨ ਮਿਣਤੀ ਕੈਲਕੁਲੇਟਰ।">
+    <meta name="keywords" content="Land Calculator, Punjabi Land Calculator, Inderjeet Singh Talwandi Sabo, Jameen Minnti, Killa Kanal Marla Calculator, Karam Calculator, Punjabi App, 9464491806">
+    <meta name="author" content="Inderjeet Singh Talwandi Sabo">
+    
+    <!-- Social Media Sharing Tags (Facebook/WhatsApp ਲਈ) -->
+    <meta property="og:title" content="Land Calculator Punjabi - Inderjeet Singh">
+    <meta property="og:description" content="ਜਮੀਨ ਦੀ ਮਿਣਤੀ ਕਰੋ ਮਿੰਟਾਂ ਵਿੱਚ। ਕਿੱਲਾ, ਕਨਾਲ, ਮਰਲਾ, ਕਰਮਾਂ ਅਤੇ ਫੁੱਟਾਂ ਦਾ ਹਿਸਾਬ। Made by Inderjeet Singh Talwandi Sabo.">
+    <meta property="og:image" content="icon-512.png">
+    <meta property="og:url" content="https://insddrive.github.io/land-calculator/">
+
+    <!-- iOS Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Punjabi Land Calculator">
-    <title>Land Calc</title>
+    <meta name="apple-mobile-web-app-title" content="Land Calc">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Link to Manifest File -->
     <link rel="manifest" href="manifest.json">
 
     <style>
         :root {
             --primary: #15803d; 
             --bg-color: #f8fafc;
-            --radius: 12px;
-            --shadow: 0 2px 4px rgba(0,0,0,0.05);
+            --radius: 14px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body { 
             background-color: var(--bg-color); 
-            padding: 12px; 
-            min-height: 100vh;
+            padding: 16px; 
+            height: 100vh; 
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Allow scrolling if needed */
+            overflow-y: auto; 
         }
 
         .container { 
@@ -54,11 +70,7 @@
         .header span { font-size: 0.8rem; opacity: 0.9; margin-left: 6px; font-weight: 400; }
 
         /* Grid System */
-        .grid-2 { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 8px; 
-        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
         .card { 
             background: white; 
@@ -99,11 +111,7 @@
         .c-purple { background: #faf5ff; border-color: #f3e8ff; } .c-purple .label { color: #6b21a8; opacity: 0.7; }
 
         /* Dimension Boxes */
-        .dims-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .dims-wrapper { display: flex; flex-direction: column; gap: 6px; }
 
         .dim-box { 
             background: white; 
@@ -123,19 +131,10 @@
             gap: 8px; 
         }
         .dim-row { padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
-        
         .dim-col { flex: 1; }
         .dim-col label { display: block; font-size: 0.6rem; color: #64748b; font-weight: 700; margin-left: 2px; margin-bottom: 2px; }
         .dim-input { 
-            width: 100%; 
-            background: #f8fafc; 
-            border: 1px solid #e2e8f0; 
-            border-radius: 8px; 
-            padding: 6px; 
-            font-size: 1.1rem; 
-            font-weight: 600; 
-            text-align: center; 
-            outline: none;
+            width: 100%; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px; font-size: 1.1rem; font-weight: 600; text-align: center; outline: none;
         }
         .dim-input:focus { background: white; border-color: #6366f1; }
         .x-sym { color: #94a3b8; font-size: 1.1rem; margin-top: 10px; }
@@ -144,44 +143,15 @@
 
         /* Reset Button */
         .btn-reset { 
-            background: #ef4444; 
-            color: white; 
-            border: none; 
-            padding: 12px; 
-            border-radius: var(--radius); 
-            font-size: 1rem; 
-            font-weight: 700; 
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
-            margin-top: 8px;
-            width: 100%;
+            background: #ef4444; color: white; border: none; padding: 12px; border-radius: var(--radius); font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2); margin-top: 8px; width: 100%;
         }
 
-        /* Footer - Explicitly styled to be visible */
+        /* Footer */
         .footer {
-            margin-top: 20px;
-            margin-bottom: 10px;
-            text-align: center;
-            padding: 15px;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            width: 100%;
+            margin-top: 20px; margin-bottom: 10px; text-align: center; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: var(--radius); box-shadow: var(--shadow); width: 100%;
         }
-        .footer .name { 
-            font-weight: 800; 
-            color: #1e293b; 
-            font-size: 1.1rem; 
-            margin-bottom: 4px; 
-            display: block;
-        }
-        .footer p { 
-            margin: 0; 
-            font-size: 0.95rem; 
-            font-weight: 600; 
-            color: #64748b;
-        }
+        .footer .name { font-weight: 800; color: #1e293b; font-size: 1.1rem; margin-bottom: 4px; display: block; }
+        .footer p { margin: 0; font-size: 0.95rem; font-weight: 600; color: #64748b; }
 
         /* Icons */
         svg { width: 16px; height: 16px; stroke-width: 2.5; }
@@ -235,7 +205,7 @@
 
     <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset)</button>
 
-    <!-- Footer with Name -->
+    <!-- Footer -->
     <div class="footer">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p>Contact - 94644-91806</p>
