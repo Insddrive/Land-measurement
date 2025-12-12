@@ -5,19 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#15803d">
     
-    <title>Land Calculator Punjabi - Inderjeet Singh Talwandi Sabo</title>
-    <meta name="description" content="Best Punjabi Land Calculator App. Calculate Killa, Kanal, Marla offline.">
+    <title>Land Calculator Punjabi</title>
+    <meta name="description" content="Best Punjabi Land Calculator App.">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
 
     <style>
         :root {
-            /* Light Mode Variables */
             --primary: #15803d; 
-            --bg-color: #eff6ff; /* Thoda neela tint */
+            --bg-color: #eff6ff;
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --text-sub: #64748b;
@@ -25,15 +23,13 @@
             --input-bg: transparent;
             --dim-header: #eef2ff;
             --dim-bg: #f8fafc;
-            --dim-text: #4338ca;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Deep Shadow */
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --radius: 16px;
         }
 
-        /* Dark Mode Variables */
         body.dark-mode {
             --primary: #166534;
-            --bg-color: #111827; /* Dark Gray */
+            --bg-color: #111827;
             --card-bg: #1f2937;
             --text-main: #f3f4f6;
             --text-sub: #9ca3af;
@@ -41,157 +37,70 @@
             --input-bg: transparent;
             --dim-header: #374151;
             --dim-bg: #111827;
-            --dim-text: #818cf8;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s, color 0.3s; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s, color 0.3s; }
         
         html, body { height: 100%; margin: 0; padding: 0; overflow-y: auto; background-color: var(--bg-color); }
-        body { padding: 16px; display: flex; flex-direction: column; padding-bottom: 80px; }
+        body { padding: 16px; display: flex; flex-direction: column; padding-bottom: 90px; }
 
         .container { flex: 1; display: flex; flex-direction: column; gap: 12px; max-width: 500px; margin: 0 auto; width: 100%; }
 
         /* Header */
         .header { 
-            background: var(--primary); 
-            color: white; 
-            padding: 14px 20px; 
-            border-radius: var(--radius); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-shadow: 0 8px 20px rgba(21, 128, 61, 0.3); /* Green Glow */
-            flex-shrink: 0;
+            background: var(--primary); color: white; padding: 14px 20px; border-radius: var(--radius); 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 8px 20px rgba(21, 128, 61, 0.3); flex-shrink: 0;
         }
-        .header h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; margin: 0; }
-        .header-actions { display: flex; gap: 15px; align-items: center; }
-        
-        /* Dark Mode Toggle Button */
-        .theme-toggle {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
+        .header h1 { font-size: 1.3rem; font-weight: 800; margin: 0; }
+        .theme-toggle { background: rgba(255,255,255,0.2); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; }
 
-        /* Input Cards - 3D Look */
+        /* Cards */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        
         .card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            border-radius: var(--radius); 
-            padding: 12px 16px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center;
-            box-shadow: var(--shadow); /* The 3D Pop */
-            transform: translateY(0);
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); 
+            padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; 
+            box-shadow: var(--shadow); transform: translateY(0); transition: transform 0.1s;
         }
+        .card:active { transform: translateY(2px); }
         
-        /* Press Effect */
-        .card:active, .card:focus-within {
-            transform: translateY(2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary);
-        }
+        .label { font-size: 0.75rem; font-weight: 700; color: var(--text-sub); white-space: nowrap; margin-bottom: 4px; text-transform: uppercase; }
+        .input-val { font-size: 1.3rem; font-weight: 800; color: var(--text-main); border: none; outline: none; width: 100%; background: var(--input-bg); padding: 0; }
         
-        .label { font-size: 0.75rem; font-weight: 700; color: var(--text-sub); white-space: nowrap; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-        .input-val { 
-            font-size: 1.3rem; 
-            font-weight: 800; 
-            color: var(--text-main); 
-            border: none; 
-            outline: none; 
-            width: 100%; 
-            background: var(--input-bg); 
-            padding: 0;
-        }
-        .input-val::placeholder { color: var(--text-sub); opacity: 0.4; }
-
-        /* Specific Colors (Subtle Tints for Light Mode, muted for Dark) */
-        body:not(.dark-mode) .c-green { background: #f0fdf4; border-color: #bbf7d0; }
         body:not(.dark-mode) .c-green .input-val { color: #15803d; }
-        body:not(.dark-mode) .c-orange { background: #fff7ed; border-color: #fed7aa; }
         body:not(.dark-mode) .c-orange .input-val { color: #c2410c; }
-        body:not(.dark-mode) .c-yellow { background: #fefce8; border-color: #fef08a; }
         body:not(.dark-mode) .c-yellow .input-val { color: #a16207; }
-        body:not(.dark-mode) .c-purple { background: #faf5ff; border-color: #e9d5ff; }
         body:not(.dark-mode) .c-purple .input-val { color: #7e22ce; }
 
-        /* Dimension Section */
+        /* Dims */
         .dims-wrapper { display: flex; flex-direction: column; gap: 12px; margin-top: 5px; }
-        .dim-box { 
-            background: var(--card-bg); 
-            border-radius: var(--radius); 
-            border: 1px solid var(--border); 
-            overflow: hidden; 
-            box-shadow: var(--shadow);
-        }
-        .dim-header { 
-            background: var(--dim-header); 
-            padding: 8px 16px; 
-            font-size: 0.8rem; 
-            font-weight: 800; 
-            color: var(--dim-text); 
-            display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); 
-        }
+        .dim-box { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); }
+        .dim-header { background: var(--dim-header); padding: 8px 16px; font-size: 0.8rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
         .dim-row { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
         .dim-col { flex: 1; }
         .dim-col label { display: block; font-size: 0.65rem; color: var(--text-sub); font-weight: 700; margin-left: 4px; margin-bottom: 4px; }
-        .dim-input { 
-            width: 100%; 
-            background: var(--dim-bg); 
-            border: 1px solid var(--border); 
-            border-radius: 10px; 
-            padding: 8px; 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            text-align: center; 
-            outline: none;
-            color: var(--text-main);
-        }
-        .dim-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.2); }
+        .dim-input { width: 100%; background: var(--dim-bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px; font-size: 1.1rem; font-weight: 700; text-align: center; outline: none; color: var(--text-main); }
+        .dim-input:focus { border-color: var(--primary); }
         .x-sym { color: var(--text-sub); font-size: 1.2rem; margin-top: 14px; font-weight: bold; }
 
-        /* Button & Footer */
-        .btn-reset { 
-            background: #ef4444; 
-            color: white; border: none; padding: 14px; border-radius: var(--radius); font-size: 1rem; font-weight: 800; cursor: pointer; 
-            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); 
-            margin-top: 8px; width: 100%; 
-            letter-spacing: 0.5px;
-        }
-        .btn-reset:active { transform: scale(0.98); }
-
-        .footer { 
-            margin-top: 20px; text-align: center; padding: 16px; 
-            background: var(--card-bg); border: 1px solid var(--border); 
-            border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; 
-        }
+        /* Footer & Button */
+        .btn-reset { background: #ef4444; color: white; border: none; padding: 14px; border-radius: var(--radius); font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); margin-top: 8px; width: 100%; }
+        .footer { margin-top: 20px; text-align: center; padding: 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; }
         .footer .name { font-weight: 800; color: var(--text-main); font-size: 1.1rem; margin-bottom: 4px; display: block; }
         .footer p { margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); }
+        .version { font-size: 0.7rem; color: var(--text-sub); margin-top: 8px; display: block; opacity: 0.6; }
 
-        /* Install Banner */
+        /* Install Strip */
         .install-banner {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
-            padding: 12px 16px;
-            display: none; align-items: center; justify-content: space-between;
+            position: fixed; bottom: 0; left: 0; right: 0; background: var(--card-bg); border-top: 1px solid var(--border);
+            padding: 12px 16px; display: none; align-items: center; justify-content: space-between;
             z-index: 9999; box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-            color: var(--text-main);
         }
         .ib-text h3 { margin: 0; font-size: 0.95rem; color: var(--text-main); }
         .ib-text p { margin: 2px 0 0 0; font-size: 0.75rem; color: var(--text-sub); }
-        .btn-ib-install { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
-        .btn-ib-close { background: transparent; border: none; color: var(--text-sub); cursor: pointer; font-size: 1.2rem; }
+        .btn-ib-install { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; }
+        .btn-ib-close { background: transparent; border: none; color: var(--text-sub); font-size: 1.2rem; }
 
         svg { width: 18px; height: 18px; stroke-width: 2.5; }
     </style>
@@ -200,10 +109,8 @@
 
 <div class="container">
     <div class="header">
-        <div><h1>ਜਮੀਨ ਮਿਣਤੀ <span>(Land Calc)</span></h1></div>
-        <div class="header-actions">
-            <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-        </div>
+        <h1>ਜਮੀਨ ਮਿਣਤੀ</h1>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
     </div>
 
     <!-- Main Grid -->
@@ -246,7 +153,7 @@
         </div>
         <!-- Karams -->
         <div class="dim-box blue-theme">
-            <div class="dim-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.8">1K = 5.5ft</span></div>
+            <div class="dim-header" style="color: #2563eb;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.8">1K = 5.5ft</span></div>
             <div class="dim-row">
                 <div class="dim-col"><label>ਲੰਬਾਈ (Len)</label><input type="number" id="karamLength" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
                 <div class="x-sym">×</div>
@@ -260,19 +167,15 @@
     <div class="footer">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p>Contact - 94644-91806</p>
+        <span class="version">Version 2.0</span>
     </div>
 </div>
 
-<!-- INSTALL BANNER -->
+<!-- Install Banner -->
 <div id="installBanner" class="install-banner">
-    <div class="ib-content" style="display:flex; gap:10px; align-items:center;">
-        <div class="ib-text">
-            <h3>ਐਪ ਇੰਸਟਾਲ ਕਰੋ</h3>
-            <p>ਬਿਨਾਂ ਨੈੱਟਵਰਕ ਚਲਾਉਣ ਲਈ</p>
-        </div>
-    </div>
+    <div class="ib-text"><h3>ਐਪ ਇੰਸਟਾਲ ਕਰੋ</h3><p>ਬਿਨਾਂ ਨੈੱਟਵਰਕ ਚਲਾਉਣ ਲਈ</p></div>
     <div style="display:flex; gap:10px; align-items:center;">
-        <button class="btn-ib-install" onclick="installApp()">Install</button>
+        <button class="btn-ib-install" onclick="triggerInstall()">Install</button>
         <button class="btn-ib-close" onclick="closeBanner()">✕</button>
     </div>
 </div>
@@ -282,36 +185,28 @@
         window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
     }
 
-    // --- DARK MODE LOGIC ---
+    // Logic
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
+    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('themeBtn').textContent = '☀️'; }
 
-    // Check saved theme
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('themeBtn').textContent = '☀️';
-    }
-
-    // --- INSTALL BANNER ---
     let deferredPrompt;
     const installBanner = document.getElementById('installBanner');
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault(); deferredPrompt = e; installBanner.style.display = 'flex';
     });
-    async function installApp() {
-        if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; deferredPrompt = null; }
+    function triggerInstall() {
+        if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
         closeBanner();
     }
     function closeBanner() { installBanner.style.display = 'none'; }
 
-    // --- CALCULATOR LOGIC ---
     const RATES = { marla: 272.25, kanal: 5445, killa: 43560, vigha: 10890, gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, sqFt: 1, sqKaram: 30.25 };
     const METER_TO_FEET = 3.28084;
-    
     const inputs = { killa: document.getElementById('killa'), vigha: document.getElementById('vigha'), kanal: document.getElementById('kanal'), marla: document.getElementById('marla'), gaj: document.getElementById('gaj'), sqFt: document.getElementById('sqFt'), sqMeter: document.getElementById('sqMeter'), sqKm: document.getElementById('sqKm') };
     const karamInputs = { length: document.getElementById('karamLength'), width: document.getElementById('karamWidth') };
     const feetInputs = { length: document.getElementById('feetLength'), width: document.getElementById('feetWidth') };
@@ -320,10 +215,7 @@
     const fmt = (val, fixed) => val === '' ? '' : parseFloat(val.toFixed(fixed));
 
     function updateAllFields(inSqFt, sourceKey = null) {
-        if (inSqFt === '') {
-            Object.keys(inputs).forEach(k => { if (k !== sourceKey) inputs[k].value = ''; });
-            return;
-        }
+        if (inSqFt === '') { Object.keys(inputs).forEach(k => { if (k !== sourceKey) inputs[k].value = ''; }); return; }
         if (sourceKey !== 'sqFt') inputs.sqFt.value = fmt(inSqFt, 2);
         if (sourceKey !== 'killa') inputs.killa.value = fmt(inSqFt / RATES.killa, 4);
         if (sourceKey !== 'kanal') inputs.kanal.value = fmt(inSqFt / RATES.kanal, 4);
@@ -335,16 +227,12 @@
     }
 
     function calculate(unit, value) {
-        karamInputs.length.value = ''; karamInputs.width.value = ''; 
-        feetInputs.length.value = ''; feetInputs.width.value = '';
-        meterInputs.length.value = ''; meterInputs.width.value = '';
-
+        karamInputs.length.value = ''; karamInputs.width.value = ''; feetInputs.length.value = ''; feetInputs.width.value = ''; meterInputs.length.value = ''; meterInputs.width.value = '';
         if (value === '') { updateAllFields('', unit); return; }
         if (value === '.') return;
         let numValue = parseFloat(value);
         if (isNaN(numValue)) numValue = 0;
-        const inSqFt = numValue * RATES[unit];
-        updateAllFields(inSqFt, unit);
+        updateAllFields(numValue * RATES[unit], unit);
     }
 
     function syncDimensions(lenFeet, widFeet, source) {
@@ -366,19 +254,16 @@
     }
 
     function calculateFeet() {
-        const l = parseFloat(feetInputs.length.value); const w = parseFloat(feetInputs.width.value);
-        if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } 
-        else { updateAllFields('', 'feet'); if(feetInputs.length.value === '' && feetInputs.width.value === '') syncDimensions(NaN, NaN, 'reset'); }
+        const l = parseFloat(feetInputs.length.value), w = parseFloat(feetInputs.width.value);
+        if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } else { updateAllFields('', 'feet'); if(feetInputs.length.value==='' && feetInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); }
     }
     function calculateKarams() {
-        const l = parseFloat(karamInputs.length.value); const w = parseFloat(karamInputs.width.value);
-        if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5; const wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } 
-        else { updateAllFields('', 'karams'); if(karamInputs.length.value === '' && karamInputs.width.value === '') syncDimensions(NaN, NaN, 'reset'); }
+        const l = parseFloat(karamInputs.length.value), w = parseFloat(karamInputs.width.value);
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } else { updateAllFields('', 'karams'); if(karamInputs.length.value==='' && karamInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); }
     }
     function calculateMeters() {
-        const l = parseFloat(meterInputs.length.value); const w = parseFloat(meterInputs.width.value);
-        if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET; const wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } 
-        else { updateAllFields('', 'meters'); if(meterInputs.length.value === '' && meterInputs.width.value === '') syncDimensions(NaN, NaN, 'reset'); }
+        const l = parseFloat(meterInputs.length.value), w = parseFloat(meterInputs.width.value);
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } else { updateAllFields('', 'meters'); if(meterInputs.length.value==='' && meterInputs.width.value==='') syncDimensions(NaN,NaN,'reset'); }
     }
     function resetAll() { Object.values(inputs).forEach(input => input.value = ''); syncDimensions(NaN, NaN, 'reset'); }
 </script>
