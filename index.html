@@ -8,7 +8,6 @@
     <!-- SEO Tags -->
     <title>Land Calculator Punjabi - Inderjeet Singh Talwandi Sabo</title>
     <meta name="description" content="Best Punjabi Land Calculator App. Calculate Killa, Kanal, Marla offline.">
-    <meta name="google-site-verification" content="google-site-verification-code-here" />
     
     <!-- iOS Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,29 +24,14 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        /* HTML and Body styling specifically to prevent black flash */
-        html, body {
-            background-color: var(--bg-color);
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-y: auto;
-        }
-        
-        body { 
-            padding: 16px; 
-            display: flex;
-            flex-direction: column;
-        }
+        html, body { background-color: var(--bg-color); height: 100%; margin: 0; padding: 0; overflow-y: auto; }
+        body { padding: 16px; display: flex; flex-direction: column; padding-bottom: 80px; /* Space for install banner */ }
 
-        .container { 
-            flex: 1; display: flex; flex-direction: column; gap: 8px; max-width: 500px; margin: 0 auto; width: 100%;
-        }
+        .container { flex: 1; display: flex; flex-direction: column; gap: 8px; max-width: 500px; margin: 0 auto; width: 100%; }
 
         /* Header */
         .header { background: var(--primary); color: white; padding: 12px 16px; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex-shrink: 0; }
         .header h1 { font-size: 1.2rem; font-weight: 700; }
-        .header span { font-size: 0.8rem; opacity: 0.9; margin-left: 6px; font-weight: 400; }
 
         /* Grid */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -72,8 +56,10 @@
         .dim-input { width: 100%; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px; font-size: 1.1rem; font-weight: 600; text-align: center; outline: none; }
         .dim-input:focus { background: white; border-color: #6366f1; }
         .x-sym { color: #94a3b8; font-size: 1.1rem; margin-top: 10px; }
-        .blue-theme .dim-header { background: #eff6ff; color: #1e40af; }
-        .blue-theme .dim-input:focus { border-color: #3b82f6; }
+        
+        /* Themes */
+        .blue-theme .dim-header { background: #eff6ff; color: #1e40af; } .blue-theme .dim-input:focus { border-color: #3b82f6; }
+        .teal-theme .dim-header { background: #ccfbf1; color: #0f766e; } .teal-theme .dim-input:focus { border-color: #14b8a6; }
 
         /* Reset Button */
         .btn-reset { background: #ef4444; color: white; border: none; padding: 12px; border-radius: var(--radius); font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2); margin-top: 8px; width: 100%; }
@@ -86,24 +72,29 @@
         /* Icons */
         svg { width: 16px; height: 16px; stroke-width: 2.5; }
 
-        /* INSTALL MODAL */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center;
-            z-index: 1000; backdrop-filter: blur(3px); padding: 20px;
+        /* ---------------- INSTALL BANNER (STRIP) ---------------- */
+        .install-banner {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: space-between;
+            z-index: 9999;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            animation: slideUp 0.3s ease-out;
         }
-        .modal-box {
-            background: white; padding: 24px; border-radius: 20px; width: 100%; max-width: 320px;
-            text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-icon { background: #dcfce7; color: #15803d; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; }
-        .modal-title { font-size: 1.25rem; font-weight: 800; color: #15803d; margin-bottom: 8px; }
-        .modal-desc { font-size: 0.9rem; color: #64748b; margin-bottom: 24px; line-height: 1.4; }
-        .modal-actions { display: flex; gap: 12px; }
-        .btn-install-app { flex: 1; background: #15803d; color: white; padding: 12px; border-radius: 12px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(21, 128, 61, 0.2); }
-        .btn-close-modal { flex: 1; background: #f1f5f9; color: #64748b; padding: 12px; border-radius: 12px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .ib-content { display: flex; align-items: center; gap: 12px; }
+        .ib-icon { width: 40px; height: 40px; background: #dcfce7; color: #15803d; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .ib-text h3 { font-size: 0.95rem; font-weight: 700; margin: 0; color: #15803d; }
+        .ib-text p { font-size: 0.75rem; margin: 2px 0 0 0; color: #64748b; }
+        
+        .ib-actions { display: flex; align-items: center; gap: 8px; }
+        .btn-ib-install { background: #15803d; color: white; padding: 8px 16px; border-radius: 8px; border: none; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+        .btn-ib-close { background: transparent; color: #94a3b8; border: none; padding: 4px; cursor: pointer; display: flex; }
     </style>
 </head>
 <body>
@@ -114,6 +105,7 @@
         <svg style="width:22px; height:22px; opacity:0.9" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
     </div>
 
+    <!-- Main Grid -->
     <div class="grid-2">
         <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
         <div class="card c-orange"><div class="label">ਵਿੱਘਾ (Bigha)</div><input type="number" id="vigha" class="input-val" placeholder="0" oninput="calculate('vigha', this.value)"></div>
@@ -131,7 +123,9 @@
         <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="sqKm" class="input-val" placeholder="0" oninput="calculate('sqKm', this.value)"></div>
     </div>
 
+    <!-- Dimensions -->
     <div class="dims-wrapper">
+        <!-- Feet Box -->
         <div class="dim-box">
             <div class="dim-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
             <div class="dim-row">
@@ -140,6 +134,18 @@
                 <div class="dim-col"><label>ਚੌੜਾਈ (Wid)</label><input type="number" id="feetWidth" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
             </div>
         </div>
+        
+        <!-- Meters Box (NEW) -->
+        <div class="dim-box teal-theme">
+            <div class="dim-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ (By Meters)</div>
+            <div class="dim-row">
+                <div class="dim-col"><label>ਲੰਬਾਈ (Len)</label><input type="number" id="meterLength" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
+                <div class="x-sym">×</div>
+                <div class="dim-col"><label>ਚੌੜਾਈ (Wid)</label><input type="number" id="meterWidth" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
+            </div>
+        </div>
+
+        <!-- Karams Box -->
         <div class="dim-box blue-theme">
             <div class="dim-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.8">1K = 5.5ft</span></div>
             <div class="dim-row">
@@ -158,12 +164,20 @@
     </div>
 </div>
 
-<div id="installModal" class="modal-overlay">
-    <div class="modal-box">
-        <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:32px; height:32px;"><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5"/><path d="M12 3v13.5"/><path d="M16.5 12 12 16.5 7.5 12"/></svg></div>
-        <div class="modal-title">ਐਪ ਇੰਸਟਾਲ ਕਰੋ (Install App)</div>
-        <p class="modal-desc">ਇੰਟਰਨੈੱਟ ਤੋਂ ਬਿਨਾਂ ਚਲਾਉਣ ਲਈ ਇਸਨੂੰ ਆਪਣੇ ਫੋਨ ਵਿੱਚ ਸੇਵ ਕਰੋ।</p>
-        <div class="modal-actions"><button class="btn-close-modal" onclick="closeModal()">ਬਾਅਦ ਵਿੱਚ</button><button class="btn-install-app" onclick="installApp()">ਇੰਸਟਾਲ ਕਰੋ</button></div>
+<!-- INSTALL BANNER (BOTTOM STRIP) -->
+<div id="installBanner" class="install-banner">
+    <div class="ib-content">
+        <div class="ib-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px; height:24px;"><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5"/><path d="M12 3v13.5"/><path d="M16.5 12 12 16.5 7.5 12"/></svg>
+        </div>
+        <div class="ib-text">
+            <h3>ਐਪ ਇੰਸਟਾਲ ਕਰੋ</h3>
+            <p>ਬਿਨਾਂ ਨੈੱਟਵਰਕ ਚਲਾਉਣ ਲਈ</p>
+        </div>
+    </div>
+    <div class="ib-actions">
+        <button class="btn-ib-install" onclick="installApp()">Install</button>
+        <button class="btn-ib-close" onclick="closeBanner()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:20px;height:20px;"><path d="M18 6 6 18"/><path d="M6 6 18 18"/></svg></button>
     </div>
 </div>
 
@@ -172,16 +186,37 @@
         window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
     }
 
+    // --- INSTALL BANNER LOGIC ---
     let deferredPrompt;
-    const installModal = document.getElementById('installModal');
-    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; installModal.style.display = 'flex'; });
-    async function installApp() { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; deferredPrompt = null; } closeModal(); }
-    function closeModal() { installModal.style.display = 'none'; }
+    const installBanner = document.getElementById('installBanner');
 
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBanner.style.display = 'flex'; // Show banner at bottom
+    });
+
+    async function installApp() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        }
+        closeBanner();
+    }
+
+    function closeBanner() {
+        installBanner.style.display = 'none';
+    }
+
+    // --- CALCULATOR LOGIC ---
     const RATES = { marla: 272.25, kanal: 5445, killa: 43560, vigha: 10890, gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, sqFt: 1, sqKaram: 30.25 };
+    const METER_TO_FEET = 3.28084;
+    
     const inputs = { killa: document.getElementById('killa'), vigha: document.getElementById('vigha'), kanal: document.getElementById('kanal'), marla: document.getElementById('marla'), gaj: document.getElementById('gaj'), sqFt: document.getElementById('sqFt'), sqMeter: document.getElementById('sqMeter'), sqKm: document.getElementById('sqKm') };
     const karamInputs = { length: document.getElementById('karamLength'), width: document.getElementById('karamWidth') };
     const feetInputs = { length: document.getElementById('feetLength'), width: document.getElementById('feetWidth') };
+    const meterInputs = { length: document.getElementById('meterLength'), width: document.getElementById('meterWidth') };
 
     const fmt = (val, fixed) => val === '' ? '' : parseFloat(val.toFixed(fixed));
 
@@ -201,55 +236,86 @@
     }
 
     function calculate(unit, value) {
+        // Clear all dimensions if modifying area directly
         karamInputs.length.value = ''; karamInputs.width.value = ''; 
         feetInputs.length.value = ''; feetInputs.width.value = '';
+        meterInputs.length.value = ''; meterInputs.width.value = '';
 
         if (value === '') { updateAllFields('', unit); return; }
         if (value === '.') return;
-
         let numValue = parseFloat(value);
         if (isNaN(numValue)) numValue = 0;
-
         const inSqFt = numValue * RATES[unit];
         updateAllFields(inSqFt, unit);
     }
 
-    function calculateFeet() {
-        const lenVal = feetInputs.length.value;
-        const widVal = feetInputs.width.value;
-        const len = parseFloat(lenVal);
-        const wid = parseFloat(widVal);
-
-        if (!isNaN(len)) karamInputs.length.value = parseFloat((len / 5.5).toFixed(2));
-        else if (lenVal === '') karamInputs.length.value = '';
+    // Sync Dimensions functions
+    function syncDimensions(lenFeet, widFeet, source) {
+        // Source 'feet'
+        if (source !== 'feet') {
+             if (!isNaN(lenFeet)) feetInputs.length.value = fmt(lenFeet, 2);
+             if (!isNaN(widFeet)) feetInputs.width.value = fmt(widFeet, 2);
+             if (source === 'reset') { feetInputs.length.value = ''; feetInputs.width.value = ''; }
+        }
         
-        if (!isNaN(wid)) karamInputs.width.value = parseFloat((wid / 5.5).toFixed(2));
-        else if (widVal === '') karamInputs.width.value = '';
+        // Update Karams (1 Karam = 5.5 Feet)
+        if (source !== 'karams') {
+            if (!isNaN(lenFeet)) karamInputs.length.value = fmt(lenFeet / 5.5, 2);
+            if (!isNaN(widFeet)) karamInputs.width.value = fmt(widFeet / 5.5, 2);
+            if (source === 'reset') { karamInputs.length.value = ''; karamInputs.width.value = ''; }
+        }
 
-        if (!isNaN(len) && !isNaN(wid)) updateAllFields(len * wid, 'feet');
-        else updateAllFields('', 'feet');
+        // Update Meters (1 Meter = 3.28084 Feet)
+        if (source !== 'meters') {
+            if (!isNaN(lenFeet)) meterInputs.length.value = fmt(lenFeet / METER_TO_FEET, 2);
+            if (!isNaN(widFeet)) meterInputs.width.value = fmt(widFeet / METER_TO_FEET, 2);
+            if (source === 'reset') { meterInputs.length.value = ''; meterInputs.width.value = ''; }
+        }
+    }
+
+    function calculateFeet() {
+        const l = parseFloat(feetInputs.length.value);
+        const w = parseFloat(feetInputs.width.value);
+        if (!isNaN(l) && !isNaN(w)) {
+            updateAllFields(l * w, 'feet');
+            syncDimensions(l, w, 'feet');
+        } else {
+            updateAllFields('', 'feet');
+            if(feetInputs.length.value === '' && feetInputs.width.value === '') syncDimensions(NaN, NaN, 'reset');
+        }
     }
 
     function calculateKarams() {
-        const lenVal = karamInputs.length.value;
-        const widVal = karamInputs.width.value;
-        const len = parseFloat(lenVal);
-        const wid = parseFloat(widVal);
+        const l = parseFloat(karamInputs.length.value);
+        const w = parseFloat(karamInputs.width.value);
+        if (!isNaN(l) && !isNaN(w)) {
+            const lFeet = l * 5.5;
+            const wFeet = w * 5.5;
+            updateAllFields(lFeet * wFeet, 'karams');
+            syncDimensions(lFeet, wFeet, 'karams');
+        } else {
+            updateAllFields('', 'karams');
+            if(karamInputs.length.value === '' && karamInputs.width.value === '') syncDimensions(NaN, NaN, 'reset');
+        }
+    }
 
-        if (!isNaN(len)) feetInputs.length.value = parseFloat((len * 5.5).toFixed(2));
-        else if (lenVal === '') feetInputs.length.value = '';
-
-        if (!isNaN(wid)) feetInputs.width.value = parseFloat((wid * 5.5).toFixed(2));
-        else if (widVal === '') feetInputs.width.value = '';
-
-        if (!isNaN(len) && !isNaN(wid)) updateAllFields(len * wid * RATES.sqKaram, 'karams');
-        else updateAllFields('', 'karams');
+    function calculateMeters() {
+        const l = parseFloat(meterInputs.length.value);
+        const w = parseFloat(meterInputs.width.value);
+        if (!isNaN(l) && !isNaN(w)) {
+            const lFeet = l * METER_TO_FEET;
+            const wFeet = w * METER_TO_FEET;
+            updateAllFields(lFeet * wFeet, 'meters');
+            syncDimensions(lFeet, wFeet, 'meters');
+        } else {
+            updateAllFields('', 'meters');
+            if(meterInputs.length.value === '' && meterInputs.width.value === '') syncDimensions(NaN, NaN, 'reset');
+        }
     }
 
     function resetAll() {
         Object.values(inputs).forEach(input => input.value = '');
-        karamInputs.length.value = ''; karamInputs.width.value = '';
-        feetInputs.length.value = ''; feetInputs.width.value = '';
+        syncDimensions(NaN, NaN, 'reset');
     }
 </script>
 
