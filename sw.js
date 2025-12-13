@@ -1,4 +1,4 @@
-const CACHE_NAME = 'land-calc-v27';
+const CACHE_NAME = 'land-calc-v28';
 
 const REQUIRED_ASSETS = [
   './',
@@ -43,5 +43,3 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
-
-
