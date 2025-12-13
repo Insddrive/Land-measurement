@@ -65,9 +65,14 @@
             flex: 1; border: none; background: transparent; padding: 10px; border-radius: 12px;
             font-size: 1rem; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: all 0.2s;
         }
-        .tab-btn.active {
-            background: var(--primary); color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
+        
+        /* Active Tab Styles */
+        .tab-btn.active { color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        
+        /* Specific Colors for Tabs */
+        #btn-area.active { background: var(--primary); }
+        #btn-price.active { background: #7e22ce; box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3); }
+
         .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: flex; flex-direction: column; gap: 12px; }
 
@@ -235,8 +240,8 @@
 
     <!-- PRICE CALCULATOR TAB -->
     <div id="tab-price" class="tab-content">
-        <div style="padding:10px; background:rgba(21, 128, 61, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
-             <p style="font-size:0.9rem; color:var(--primary); font-weight:700;">ਕਿਸੇ ਇੱਕ ਦਾ ਰੇਟ ਭਰੋ, ਬਾਕੀ ਆਪਣੇ ਆਪ ਆ ਜਾਣਗੇ</p>
+        <div style="padding:10px; background:rgba(126, 34, 206, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
+             <p style="font-size:0.9rem; color:#7e22ce; font-weight:700;">ਕਿਸੇ ਇੱਕ ਦਾ ਰੇਟ ਭਰੋ, ਬਾਕੀ ਆਪਣੇ ਆਪ ਆ ਜਾਣਗੇ</p>
         </div>
 
         <div class="grid-2">
@@ -257,14 +262,14 @@
             <div class="card"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਕਿ.ਮੀ. (₹/Km²)</div><input type="text" inputmode="decimal" id="p_sqKm" class="input-val" placeholder="0" oninput="calculatePrice('sqKm', this.value)"></div>
         </div>
         
-        <button class="btn-reset" onclick="resetPrice()">ਸਾਫ ਕਰੋ (Reset Price)</button>
+        <button class="btn-reset" onclick="resetPrice()" style="background:#7e22ce;">ਸਾਫ ਕਰੋ (Reset Price)</button>
     </div>
 
     <div class="footer">
         <img src="profile.jpg" alt="Inderjeet Singh" class="profile-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p class="contact">Contact - 94644-91806</p>
-        <span class="version">Version 4.1</span>
+        <span class="version">Version 4.2</span>
     </div>
 </div>
 
@@ -360,26 +365,19 @@
     }
 
     // PRICE LOGIC WITH COMMAS
-    // Helper to format numbers with Indian comma system
     function formatMoney(num) {
         if (!num && num !== 0) return '';
-        // toLocaleString('en-IN') adds commas nicely (e.g. 1,00,000)
-        // maximumFractionDigits: 2 to keep it clean like money
         return Number(num).toLocaleString('en-IN', { maximumFractionDigits: 2 });
     }
 
-    // Helper to parse comma separated string back to number
     function parseMoney(str) {
         if (!str) return '';
-        // Remove all commas
         return parseFloat(str.replace(/,/g, ''));
     }
 
     function updatePriceFields(pricePerSqFt, sourceKey = null) {
         if (pricePerSqFt === '') { Object.keys(priceInputs).forEach(k => { if (k !== sourceKey) priceInputs[k].value = ''; }); return; }
         
-        // We only format the fields that are NOT the one being typed in
-        // to avoid cursor jumping issues.
         const setVal = (key, val) => {
             if (key !== sourceKey) {
                 priceInputs[key].value = formatMoney(val);
@@ -397,15 +395,11 @@
     }
 
     function calculatePrice(unit, value) {
-        // We take the raw string 'value' which might contain commas if the user typed them
-        // But mostly we care about cleaning it first
         if (value === '') { updatePriceFields('', unit); return; }
         
         let numValue = parseMoney(value);
         if (isNaN(numValue)) return;
 
-        // Calculate Price Per Sq Ft first
-        // Formula: Price_Per_SqFt = Input_Price / Area_Of_Input_Unit
         let pricePerSqFt = numValue / RATES[unit];
         updatePriceFields(pricePerSqFt, unit);
     }
