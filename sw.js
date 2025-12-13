@@ -1,4 +1,4 @@
-const CACHE_NAME = 'land-calc-v26';
+const CACHE_NAME = 'land-calc-v27';
 
 const REQUIRED_ASSETS = [
   './',
