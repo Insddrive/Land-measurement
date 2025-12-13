@@ -59,11 +59,11 @@
         /* Tabs */
         .tabs {
             display: flex; background: var(--card-bg); padding: 4px; border-radius: var(--radius);
-            box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 5px;
+            box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 5px; overflow-x: auto;
         }
         .tab-btn {
             flex: 1; border: none; background: transparent; padding: 10px; border-radius: 12px;
-            font-size: 1rem; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: all 0.2s;
+            font-size: 0.9rem; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: all 0.2s; white-space: nowrap;
         }
         
         /* Active Tab Styles */
@@ -72,6 +72,7 @@
         /* Specific Colors for Tabs */
         #btn-area.active { background: var(--primary); }
         #btn-price.active { background: #7e22ce; box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3); }
+        #btn-divide.active { background: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
 
         .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: flex; flex-direction: column; gap: 12px; }
@@ -125,6 +126,14 @@
         
         .error-msg { color: #ef4444; font-size: 0.7rem; text-align: center; padding-bottom: 8px; font-weight: 600; display: none; }
 
+        /* Divider Result Box */
+        .result-box {
+            background: #f0f9ff; border: 2px dashed #0284c7; border-radius: var(--radius); padding: 20px; text-align: center;
+        }
+        .dark-mode .result-box { background: rgba(2, 132, 199, 0.1); border-color: #0c4a6e; }
+        .res-title { font-size: 0.9rem; color: var(--text-sub); font-weight: 700; margin-bottom: 8px; }
+        .res-main { font-size: 1.4rem; font-weight: 800; color: #0284c7; }
+
         /* Footer & Button */
         .btn-reset { background: #ef4444; color: white; border: none; padding: 14px; border-radius: var(--radius); font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); margin-top: 8px; width: 100%; }
         
@@ -166,9 +175,10 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('area')" id="btn-area">ਜਮੀਨ ਮਿਣਤੀ</button>
         <button class="tab-btn" onclick="switchTab('price')" id="btn-price">ਰੇਟ ਪਤਾ ਕਰੋ</button>
+        <button class="tab-btn" onclick="switchTab('divide')" id="btn-divide">ਜਮੀਨ ਵੰਡੋ</button>
     </div>
 
-    <!-- AREA CALCULATOR TAB -->
+    <!-- 1. AREA CALCULATOR TAB -->
     <div id="tab-area" class="tab-content active">
         <div class="grid-2">
             <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
@@ -238,14 +248,13 @@
         <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset Area)</button>
     </div>
 
-    <!-- PRICE CALCULATOR TAB -->
+    <!-- 2. PRICE CALCULATOR TAB -->
     <div id="tab-price" class="tab-content">
         <div style="padding:10px; background:rgba(126, 34, 206, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
              <p style="font-size:0.9rem; color:#7e22ce; font-weight:700;">ਕਿਸੇ ਇੱਕ ਦਾ ਰੇਟ ਭਰੋ, ਬਾਕੀ ਆਪਣੇ ਆਪ ਆ ਜਾਣਗੇ</p>
         </div>
 
         <div class="grid-2">
-            <!-- Using type="text" and inputmode="decimal" to allow commas and show numeric keyboard -->
             <div class="card c-green"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਕਿੱਲਾ (₹/Acre)</div><input type="text" inputmode="decimal" id="p_killa" class="input-val" placeholder="0" oninput="calculatePrice('killa', this.value)"></div>
             <div class="card c-orange"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਵਿੱਘਾ (₹/Bigha)</div><input type="text" inputmode="decimal" id="p_vigha" class="input-val" placeholder="0" oninput="calculatePrice('vigha', this.value)"></div>
         </div>
@@ -265,11 +274,55 @@
         <button class="btn-reset" onclick="resetPrice()" style="background:#7e22ce;">ਸਾਫ ਕਰੋ (Reset Price)</button>
     </div>
 
+    <!-- 3. LAND DIVIDER TAB -->
+    <div id="tab-divide" class="tab-content">
+        <div style="padding:10px; background:rgba(2, 132, 199, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
+             <p style="font-size:0.9rem; color:#0284c7; font-weight:700;">ਕੁੱਲ ਜਮੀਨ ਭਰੋ ਅਤੇ ਹਿੱਸੇਦਾਰ ਦੱਸੋ</p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <div class="card c-green">
+                <div class="label">ਕੁੱਲ ਕਿੱਲੇ (Acres)</div>
+                <input type="number" id="div_killa" class="input-val" placeholder="0" oninput="calculateDivision()">
+            </div>
+            
+            <div class="grid-2">
+                <div class="card c-orange">
+                    <div class="label">ਕੁੱਲ ਕਨਾਲ (Kanal)</div>
+                    <input type="number" id="div_kanal" class="input-val" placeholder="0" oninput="calculateDivision()">
+                </div>
+                <div class="card c-yellow">
+                    <div class="label">ਕੁੱਲ ਮਰਲੇ (Marla)</div>
+                    <input type="number" id="div_marla" class="input-val" placeholder="0" oninput="calculateDivision()">
+                </div>
+            </div>
+
+            <div class="card" style="border-color:#0284c7; background:#f0f9ff;">
+                <div class="label" style="color:#0284c7;">ਕਿੰਨੇ ਹਿੱਸੇਦਾਰ (People)</div>
+                <input type="number" id="div_people" class="input-val" placeholder="1" value="1" style="color:#0284c7;" oninput="calculateDivision()">
+            </div>
+        </div>
+
+        <div style="margin-top:20px;">
+            <p class="res-title">ਹਰੇਕ ਦੇ ਹਿੱਸੇ ਆਈ ਜਮੀਨ (Each Share):</p>
+            <div class="result-box">
+                <div class="res-main">
+                    <span id="res_killa">0</span> ਕਿੱਲੇ - 
+                    <span id="res_kanal">0</span> ਕਨਾਲ - 
+                    <span id="res_marla">0</span> ਮਰਲੇ
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetDivider()" style="background:#0284c7;">ਸਾਫ ਕਰੋ (Reset Divider)</button>
+    </div>
+
+
     <div class="footer">
         <img src="profile.jpg" alt="Inderjeet Singh" class="profile-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p class="contact">Contact - 94644-91806</p>
-        <span class="version">Version 4.2</span>
+        <span class="version">Version 5.0</span>
     </div>
 </div>
 
@@ -406,6 +459,43 @@
 
     function resetPrice() {
         Object.values(priceInputs).forEach(input => input.value = '');
+    }
+
+    // DIVIDER LOGIC
+    function calculateDivision() {
+        const k = parseFloat(document.getElementById('div_killa').value) || 0;
+        const kn = parseFloat(document.getElementById('div_kanal').value) || 0;
+        const m = parseFloat(document.getElementById('div_marla').value) || 0;
+        const people = parseFloat(document.getElementById('div_people').value) || 1;
+
+        if (people <= 0) return;
+
+        // Convert everything to Marlas for calculation
+        // 1 Killa = 8 Kanal = 160 Marlas
+        // 1 Kanal = 20 Marlas
+        let totalMarlas = (k * 160) + (kn * 20) + m;
+        
+        let shareMarlas = totalMarlas / people;
+
+        // Convert Share back to Killa, Kanal, Marla
+        let resKilla = Math.floor(shareMarlas / 160);
+        let remainderAfterKilla = shareMarlas % 160;
+        
+        let resKanal = Math.floor(remainderAfterKilla / 20);
+        let resMarla = remainderAfterKilla % 20;
+
+        document.getElementById('res_killa').textContent = resKilla;
+        document.getElementById('res_kanal').textContent = resKanal;
+        // Show marla with 2 decimal places if it's not a whole number
+        document.getElementById('res_marla').textContent = Number.isInteger(resMarla) ? resMarla : resMarla.toFixed(2);
+    }
+
+    function resetDivider() {
+        document.getElementById('div_killa').value = '';
+        document.getElementById('div_kanal').value = '';
+        document.getElementById('div_marla').value = '';
+        document.getElementById('div_people').value = '1';
+        calculateDivision();
     }
 
     // DIMS Logic
