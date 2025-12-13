@@ -72,6 +72,7 @@
         body:not(.dark-mode) .c-orange .input-val { color: #c2410c; }
         body:not(.dark-mode) .c-yellow .input-val { color: #a16207; }
         body:not(.dark-mode) .c-purple .input-val { color: #7e22ce; }
+        body:not(.dark-mode) .c-blue .input-val { color: #2563eb; }
 
         /* Dims */
         .dims-wrapper { display: flex; flex-direction: column; gap: 12px; margin-top: 5px; }
@@ -87,15 +88,8 @@
 
         /* Dropdown styling */
         .unit-select {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            outline: none;
-            cursor: pointer;
+            background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 6px; padding: 4px 8px; font-size: 0.8rem; font-weight: 700; outline: none; cursor: pointer;
         }
         .unit-select option { color: black; }
 
@@ -110,7 +104,15 @@
 
         /* Footer & Button */
         .btn-reset { background: #ef4444; color: white; border: none; padding: 14px; border-radius: var(--radius); font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); margin-top: 8px; width: 100%; }
-        .footer { margin-top: 20px; text-align: center; padding: 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; }
+        
+        .footer { margin-top: 20px; text-align: center; padding: 20px 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; display: flex; flex-direction: column; align-items: center; }
+        
+        .profile-pic {
+            width: 70px; height: 70px; border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--primary); margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
         .footer .name { font-weight: 800; color: var(--text-main); font-size: 1.1rem; margin-bottom: 4px; display: block; }
         .footer .contact { margin: 0; font-size: 1.1rem; font-weight: 800; color: #16a34a; }
         .version { font-size: 0.7rem; color: var(--text-sub); margin-top: 8px; display: block; opacity: 0.6; }
@@ -147,7 +149,11 @@
         <div class="card c-yellow"><div class="label">ਮਰਲਾ (Marla)</div><input type="number" id="marla" class="input-val" placeholder="0" oninput="calculate('marla', this.value)"></div>
     </div>
     <div class="grid-2">
-        <div class="card c-purple"><div class="label">ਗਜ (Yards)</div><input type="number" id="gaj" class="input-val" placeholder="0" oninput="calculate('gaj', this.value)"></div>
+        <div class="card c-purple"><div class="label">ਸਰਕਾਰੀ ਗਜ (30.25)</div><input type="number" id="gaj" class="input-val" placeholder="0" oninput="calculate('gaj', this.value)"></div>
+        <div class="card c-purple"><div class="label">ਸ਼ਹਿਰੀ ਗਜ (25)</div><input type="number" id="urbanGaj" class="input-val" placeholder="0" oninput="calculate('urbanGaj', this.value)"></div>
+    </div>
+    <div class="grid-2">
+        <div class="card c-blue"><div class="label">ਸ਼ਹਿਰੀ ਮਰਲਾ (Urban)</div><input type="number" id="urbanMarla" class="input-val" placeholder="0" oninput="calculate('urbanMarla', this.value)"></div>
         <div class="card"><div class="label">ਸਕੇਅਰ ਫੁੱਟ (Ft²)</div><input type="number" id="sqFt" class="input-val" placeholder="0" oninput="calculate('sqFt', this.value)"></div>
     </div>
     <div class="grid-2">
@@ -159,9 +165,7 @@
     <div class="dims-wrapper">
         <!-- Feet -->
         <div class="dim-box">
-            <div class="dim-header header-green">
-                <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ</div>
-            </div>
+            <div class="dim-header header-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
             <div class="dim-row">
                 <div class="dim-col"><label>ਲੰਬਾਈ (Ft)</label><input type="number" id="feetLength" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
                 <div class="x-sym">×</div>
@@ -170,9 +174,7 @@
         </div>
         <!-- Meters -->
         <div class="dim-box">
-            <div class="dim-header header-blue">
-                <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ</div>
-            </div>
+            <div class="dim-header header-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ (By Meters)</div>
             <div class="dim-row">
                 <div class="dim-col"><label>ਲੰਬਾਈ (M)</label><input type="number" id="meterLength" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
                 <div class="x-sym">×</div>
@@ -181,21 +183,17 @@
         </div>
         <!-- Karams -->
         <div class="dim-box">
-            <div class="dim-header header-purple">
-                <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ</div>
-            </div>
+            <div class="dim-header header-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.9">1K = 5.5ft</span></div>
             <div class="dim-row">
                 <div class="dim-col"><label>ਲੰਬਾਈ (K)</label><input type="number" id="karamLength" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
                 <div class="x-sym">×</div>
                 <div class="dim-col"><label>ਚੌੜਾਈ (K)</label><input type="number" id="karamWidth" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
             </div>
         </div>
-        <!-- Triangle with Dropdown -->
+        <!-- Triangle -->
         <div class="dim-box">
             <div class="dim-header header-pink">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18L12 4z"/></svg> ਤਿਕੋਣੀ ਜ਼ਮੀਨ
-                </div>
+                <div style="display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18L12 4z"/></svg> ਤਿਕੋਣੀ ਜ਼ਮੀਨ</div>
                 <select id="triUnit" class="unit-select" onchange="updateTriLabels(); calculateTriangle();">
                     <option value="feet">ਫੁੱਟ (Ft)</option>
                     <option value="meters">ਮੀਟਰ (M)</option>
@@ -214,9 +212,12 @@
     <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset)</button>
 
     <div class="footer">
+        <!-- Profile Picture: Using placeholder for preview, real one on upload -->
+        <img src="profile.jpg" alt="Inderjeet Singh" class="profile-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+        
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p class="contact">Contact - 94644-91806</p>
-        <span class="version">Version 2.9.1 (Tri Select)</span>
+        <span class="version">Version 3.1</span>
     </div>
 </div>
 
@@ -254,9 +255,31 @@
     }
     function closeBanner() { installBanner.style.display = 'none'; }
 
-    const RATES = { marla: 272.25, kanal: 5445, killa: 43560, vigha: 10890, gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, sqFt: 1, sqKaram: 30.25 };
+    const RATES = { 
+        marla: 272.25,      // Govt Revenue Marla (Standard)
+        urbanMarla: 225,    // Urban Marla (25 Gaj * 9 SqFt)
+        kanal: 5445, 
+        killa: 43560, 
+        vigha: 10890, 
+        gaj: 9,             // Standard Gaj (Sq Yard)
+        sqMeter: 10.7639, 
+        sqKm: 10763910.42, 
+        sqFt: 1, 
+        sqKaram: 30.25 
+    };
     const METER_TO_FEET = 3.28084;
-    const inputs = { killa: document.getElementById('killa'), vigha: document.getElementById('vigha'), kanal: document.getElementById('kanal'), marla: document.getElementById('marla'), gaj: document.getElementById('gaj'), sqFt: document.getElementById('sqFt'), sqMeter: document.getElementById('sqMeter'), sqKm: document.getElementById('sqKm') };
+    const inputs = { 
+        killa: document.getElementById('killa'), 
+        vigha: document.getElementById('vigha'), 
+        kanal: document.getElementById('kanal'), 
+        marla: document.getElementById('marla'), 
+        gaj: document.getElementById('gaj'), 
+        urbanGaj: document.getElementById('urbanGaj'), 
+        urbanMarla: document.getElementById('urbanMarla'),
+        sqFt: document.getElementById('sqFt'), 
+        sqMeter: document.getElementById('sqMeter'), 
+        sqKm: document.getElementById('sqKm') 
+    };
     const karamInputs = { length: document.getElementById('karamLength'), width: document.getElementById('karamWidth') };
     const feetInputs = { length: document.getElementById('feetLength'), width: document.getElementById('feetWidth') };
     const meterInputs = { length: document.getElementById('meterLength'), width: document.getElementById('meterWidth') };
@@ -272,6 +295,8 @@
         if (sourceKey !== 'marla') inputs.marla.value = fmt(inSqFt / RATES.marla, 4);
         if (sourceKey !== 'vigha') inputs.vigha.value = fmt(inSqFt / RATES.vigha, 4);
         if (sourceKey !== 'gaj') inputs.gaj.value = fmt(inSqFt / RATES.gaj, 2);
+        if (sourceKey !== 'urbanGaj') inputs.urbanGaj.value = fmt(inSqFt / RATES.gaj, 2);
+        if (sourceKey !== 'urbanMarla') inputs.urbanMarla.value = fmt(inSqFt / RATES.urbanMarla, 4);
         if (sourceKey !== 'sqMeter') inputs.sqMeter.value = fmt(inSqFt / RATES.sqMeter, 2);
         if (sourceKey !== 'sqKm') inputs.sqKm.value = fmt(inSqFt / RATES.sqKm, 7);
     }
@@ -282,7 +307,11 @@
         if (value === '.') return;
         let numValue = parseFloat(value);
         if (isNaN(numValue)) numValue = 0;
-        updateAllFields(numValue * RATES[unit], unit);
+        
+        let rate = RATES[unit];
+        if (unit === 'urbanGaj') rate = RATES.gaj;
+
+        updateAllFields(numValue * rate, unit);
     }
 
     function clearDims(exclude = '') {
@@ -298,11 +327,22 @@
         if (source !== 'meters') { if (!isNaN(lenFeet)) meterInputs.length.value = fmt(lenFeet / METER_TO_FEET, 2); if (!isNaN(widFeet)) meterInputs.width.value = fmt(widFeet / METER_TO_FEET, 2); }
     }
 
-    function calculateFeet() { clearDims('feet'); const l = parseFloat(feetInputs.length.value), w = parseFloat(feetInputs.width.value); if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } else { updateAllFields('', 'feet'); } }
-    function calculateKarams() { clearDims('karams'); const l = parseFloat(karamInputs.length.value), w = parseFloat(karamInputs.width.value); if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } else { updateAllFields('', 'karams'); } }
-    function calculateMeters() { clearDims('meters'); const l = parseFloat(meterInputs.length.value), w = parseFloat(meterInputs.width.value); if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } else { updateAllFields('', 'meters'); } }
+    function calculateFeet() { 
+        clearDims('feet');
+        const l = parseFloat(feetInputs.length.value), w = parseFloat(feetInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } else { updateAllFields('', 'feet'); } 
+    }
+    function calculateKarams() { 
+        clearDims('karams');
+        const l = parseFloat(karamInputs.length.value), w = parseFloat(karamInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } else { updateAllFields('', 'karams'); } 
+    }
+    function calculateMeters() { 
+        clearDims('meters');
+        const l = parseFloat(meterInputs.length.value), w = parseFloat(meterInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } else { updateAllFields('', 'meters'); } 
+    }
 
-    // TRIANGLE LOGIC WITH DROPDOWN
     function updateTriLabels() {
         const unit = document.getElementById('triUnit').value;
         const labels = document.querySelectorAll('.unit-label');
@@ -322,18 +362,11 @@
 
         if (!isNaN(a) && !isNaN(b) && !isNaN(c)) {
             if (a + b > c && a + c > b && b + c > a) {
-                // Heron's Formula
                 const s = (a + b + c) / 2;
                 let area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
                 
-                // Convert area to Sq Feet based on unit
-                if (unit === 'meters') {
-                    // Area is in Sq M -> Sq Ft
-                    area = area * (METER_TO_FEET * METER_TO_FEET);
-                } else if (unit === 'karams') {
-                    // Area is in Sq Karams -> Sq Ft (1 Sq Karam = 30.25 Sq Ft)
-                    area = area * 30.25; 
-                }
+                if (unit === 'meters') { area = area * (METER_TO_FEET * METER_TO_FEET); } 
+                else if (unit === 'karams') { area = area * 30.25; }
                 
                 updateAllFields(area, 'triangle');
                 err.style.display = 'none';
