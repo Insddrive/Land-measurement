@@ -56,6 +56,23 @@
         .header h1 { font-size: 1.3rem; font-weight: 800; margin: 0; }
         .theme-toggle { background: rgba(255,255,255,0.2); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; }
 
+        /* Tabs */
+        .tabs {
+            display: flex; background: var(--card-bg); padding: 4px; border-radius: var(--radius);
+            box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 5px;
+        }
+        .tab-btn {
+            flex: 1; border: none; background: transparent; padding: 10px; border-radius: 12px;
+            font-size: 1rem; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--primary); color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: flex; flex-direction: column; gap: 12px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
         /* Cards */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { 
@@ -68,6 +85,7 @@
         .label { font-size: 0.75rem; font-weight: 700; color: var(--text-sub); white-space: nowrap; margin-bottom: 4px; text-transform: uppercase; }
         .input-val { font-size: 1.3rem; font-weight: 800; color: var(--text-main); border: none; outline: none; width: 100%; background: var(--input-bg); padding: 0; }
         
+        /* Color classes for inputs */
         body:not(.dark-mode) .c-green .input-val { color: #15803d; }
         body:not(.dark-mode) .c-orange .input-val { color: #c2410c; }
         body:not(.dark-mode) .c-yellow .input-val { color: #a16207; }
@@ -139,85 +157,114 @@
         <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
     </div>
 
-    <!-- Main Grid -->
-    <div class="grid-2">
-        <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
-        <div class="card c-orange"><div class="label">ਵਿੱਘਾ (Bigha)</div><input type="number" id="vigha" class="input-val" placeholder="0" oninput="calculate('vigha', this.value)"></div>
-    </div>
-    <div class="grid-2">
-        <div class="card c-orange"><div class="label">ਕਨਾਲ (Kanal)</div><input type="number" id="kanal" class="input-val" placeholder="0" oninput="calculate('kanal', this.value)"></div>
-        <div class="card c-yellow"><div class="label">ਮਰਲਾ (Marla)</div><input type="number" id="marla" class="input-val" placeholder="0" oninput="calculate('marla', this.value)"></div>
-    </div>
-    <div class="grid-2">
-        <div class="card c-purple"><div class="label">ਸਰਕਾਰੀ ਗਜ (30.25)</div><input type="number" id="gaj" class="input-val" placeholder="0" oninput="calculate('gaj', this.value)"></div>
-        <div class="card c-purple"><div class="label">ਸ਼ਹਿਰੀ ਗਜ (25)</div><input type="number" id="urbanGaj" class="input-val" placeholder="0" oninput="calculate('urbanGaj', this.value)"></div>
-    </div>
-    <div class="grid-2">
-        <div class="card c-blue"><div class="label">ਸ਼ਹਿਰੀ ਮਰਲਾ (Urban)</div><input type="number" id="urbanMarla" class="input-val" placeholder="0" oninput="calculate('urbanMarla', this.value)"></div>
-        <div class="card"><div class="label">ਸਕੇਅਰ ਫੁੱਟ (Ft²)</div><input type="number" id="sqFt" class="input-val" placeholder="0" oninput="calculate('sqFt', this.value)"></div>
-    </div>
-    <div class="grid-2">
-        <div class="card"><div class="label">ਸਕੇਅਰ ਮੀਟਰ (M²)</div><input type="number" id="sqMeter" class="input-val" placeholder="0" oninput="calculate('sqMeter', this.value)"></div>
-        <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="sqKm" class="input-val" placeholder="0" oninput="calculate('sqKm', this.value)"></div>
+    <!-- Tab Switcher -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('area')" id="btn-area">ਜਮੀਨ ਮਿਣਤੀ</button>
+        <button class="tab-btn" onclick="switchTab('price')" id="btn-price">ਰੇਟ ਪਤਾ ਕਰੋ</button>
     </div>
 
-    <!-- Dimensions -->
-    <div class="dims-wrapper">
-        <!-- Feet -->
-        <div class="dim-box">
-            <div class="dim-header header-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
-            <div class="dim-row">
-                <div class="dim-col"><label>ਲੰਬਾਈ (Ft)</label><input type="number" id="feetLength" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
-                <div class="x-sym">×</div>
-                <div class="dim-col"><label>ਚੌੜਾਈ (Ft)</label><input type="number" id="feetWidth" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
+    <!-- AREA CALCULATOR TAB -->
+    <div id="tab-area" class="tab-content active">
+        <div class="grid-2">
+            <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
+            <div class="card c-orange"><div class="label">ਵਿੱਘਾ (Bigha)</div><input type="number" id="vigha" class="input-val" placeholder="0" oninput="calculate('vigha', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card c-orange"><div class="label">ਕਨਾਲ (Kanal)</div><input type="number" id="kanal" class="input-val" placeholder="0" oninput="calculate('kanal', this.value)"></div>
+            <div class="card c-yellow"><div class="label">ਮਰਲਾ (Marla)</div><input type="number" id="marla" class="input-val" placeholder="0" oninput="calculate('marla', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card c-purple"><div class="label">ਗਜ (Gaj)</div><input type="number" id="gaj" class="input-val" placeholder="0" oninput="calculate('gaj', this.value)"></div>
+            <div class="card"><div class="label">ਸਕੇਅਰ ਫੁੱਟ (Ft²)</div><input type="number" id="sqFt" class="input-val" placeholder="0" oninput="calculate('sqFt', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card"><div class="label">ਸਕੇਅਰ ਮੀਟਰ (M²)</div><input type="number" id="sqMeter" class="input-val" placeholder="0" oninput="calculate('sqMeter', this.value)"></div>
+            <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="sqKm" class="input-val" placeholder="0" oninput="calculate('sqKm', this.value)"></div>
+        </div>
+
+        <!-- Dimensions -->
+        <div class="dims-wrapper">
+            <!-- Feet -->
+            <div class="dim-box">
+                <div class="dim-header header-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>ਲੰਬਾਈ (Ft)</label><input type="number" id="feetLength" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
+                    <div class="x-sym">×</div>
+                    <div class="dim-col"><label>ਚੌੜਾਈ (Ft)</label><input type="number" id="feetWidth" class="dim-input" placeholder="0" oninput="calculateFeet()"></div>
+                </div>
+            </div>
+            <!-- Meters -->
+            <div class="dim-box">
+                <div class="dim-header header-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ (By Meters)</div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>ਲੰਬਾਈ (M)</label><input type="number" id="meterLength" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
+                    <div class="x-sym">×</div>
+                    <div class="dim-col"><label>ਚੌੜਾਈ (M)</label><input type="number" id="meterWidth" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
+                </div>
+            </div>
+            <!-- Karams -->
+            <div class="dim-box">
+                <div class="dim-header header-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.9">1K = 5.5ft</span></div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>ਲੰਬਾਈ (K)</label><input type="number" id="karamLength" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
+                    <div class="x-sym">×</div>
+                    <div class="dim-col"><label>ਚੌੜਾਈ (K)</label><input type="number" id="karamWidth" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
+                </div>
+            </div>
+            <!-- Triangle -->
+            <div class="dim-box">
+                <div class="dim-header header-pink">
+                    <div style="display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18L12 4z"/></svg> ਤਿਕੋਣੀ ਜ਼ਮੀਨ</div>
+                    <select id="triUnit" class="unit-select" onchange="updateTriLabels(); calculateTriangle();">
+                        <option value="feet">ਫੁੱਟ (Ft)</option>
+                        <option value="meters">ਮੀਟਰ (M)</option>
+                        <option value="karams">ਕਰਮ (K)</option>
+                    </select>
+                </div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>Side A <span class="unit-label">Ft</span></label><input type="number" id="triA" class="dim-input" placeholder="0" oninput="calculateTriangle()"></div>
+                    <div class="dim-col"><label>Side B <span class="unit-label">Ft</span></label><input type="number" id="triB" class="dim-input" placeholder="0" oninput="calculateTriangle()"></div>
+                    <div class="dim-col"><label>Side C <span class="unit-label">Ft</span></label><input type="number" id="triC" class="dim-input" placeholder="0" oninput="calculateTriangle()"></div>
+                </div>
+                <div id="triError" class="error-msg">ਭੁਜਾਵਾਂ ਸਹੀ ਨਹੀਂ ਹਨ (Invalid Triangle)</div>
             </div>
         </div>
-        <!-- Meters -->
-        <div class="dim-box">
-            <div class="dim-header header-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ (By Meters)</div>
-            <div class="dim-row">
-                <div class="dim-col"><label>ਲੰਬਾਈ (M)</label><input type="number" id="meterLength" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
-                <div class="x-sym">×</div>
-                <div class="dim-col"><label>ਚੌੜਾਈ (M)</label><input type="number" id="meterWidth" class="dim-input" placeholder="0" oninput="calculateMeters()"></div>
-            </div>
-        </div>
-        <!-- Karams -->
-        <div class="dim-box">
-            <div class="dim-header header-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.9">1K = 5.5ft</span></div>
-            <div class="dim-row">
-                <div class="dim-col"><label>ਲੰਬਾਈ (K)</label><input type="number" id="karamLength" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
-                <div class="x-sym">×</div>
-                <div class="dim-col"><label>ਚੌੜਾਈ (K)</label><input type="number" id="karamWidth" class="dim-input" placeholder="0" oninput="calculateKarams()"></div>
-            </div>
-        </div>
-        <!-- Triangle -->
-        <div class="dim-box">
-            <div class="dim-header header-pink">
-                <div style="display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18L12 4z"/></svg> ਤਿਕੋਣੀ ਜ਼ਮੀਨ</div>
-                <select id="triUnit" class="unit-select" onchange="updateTriLabels(); calculateTriangle();">
-                    <option value="feet">ਫੁੱਟ (Ft)</option>
-                    <option value="meters">ਮੀਟਰ (M)</option>
-                    <option value="karams">ਕਰਮ (K)</option>
-                </select>
-            </div>
-            <div class="dim-row">
-                <div class="dim-col"><label>Side A <span class="unit-label">Ft</span></label><input type="number" id="triA" class="dim-input" placeholder="0" oninput="calculateTriangle()"></div>
-                <div class="dim-col"><label>Side B <span class="unit-label">Ft</span></label><input type="number" id="triB" class="dim-input" placeholder="0" oninput="calculateTriangle()"></div>
-                <div class="dim-col"><label>Side C <span class="unit-label">Ft</span></label><input type="number" id="triC" class="dim-input" placeholder="0" oninput="calculateTriangle()"></div>
-            </div>
-            <div id="triError" class="error-msg">ਭੁਜਾਵਾਂ ਸਹੀ ਨਹੀਂ ਹਨ (Invalid Triangle)</div>
-        </div>
+        
+        <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset Area)</button>
     </div>
 
-    <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset)</button>
+    <!-- PRICE CALCULATOR TAB -->
+    <div id="tab-price" class="tab-content">
+        <div style="padding:10px; background:rgba(21, 128, 61, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
+             <p style="font-size:0.9rem; color:var(--primary); font-weight:700;">ਕਿਸੇ ਇੱਕ ਦਾ ਰੇਟ ਭਰੋ, ਬਾਕੀ ਆਪਣੇ ਆਪ ਆ ਜਾਣਗੇ</p>
+        </div>
+
+        <div class="grid-2">
+            <!-- Using type="text" and inputmode="decimal" to allow commas and show numeric keyboard -->
+            <div class="card c-green"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਕਿੱਲਾ (₹/Acre)</div><input type="text" inputmode="decimal" id="p_killa" class="input-val" placeholder="0" oninput="calculatePrice('killa', this.value)"></div>
+            <div class="card c-orange"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਵਿੱਘਾ (₹/Bigha)</div><input type="text" inputmode="decimal" id="p_vigha" class="input-val" placeholder="0" oninput="calculatePrice('vigha', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card c-orange"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਕਨਾਲ (₹/Kanal)</div><input type="text" inputmode="decimal" id="p_kanal" class="input-val" placeholder="0" oninput="calculatePrice('kanal', this.value)"></div>
+            <div class="card c-yellow"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਮਰਲਾ (₹/Marla)</div><input type="text" inputmode="decimal" id="p_marla" class="input-val" placeholder="0" oninput="calculatePrice('marla', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card c-purple"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਗਜ (₹/Gaj)</div><input type="text" inputmode="decimal" id="p_gaj" class="input-val" placeholder="0" oninput="calculatePrice('gaj', this.value)"></div>
+            <div class="card"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਫੁੱਟ (₹/Ft²)</div><input type="text" inputmode="decimal" id="p_sqFt" class="input-val" placeholder="0" oninput="calculatePrice('sqFt', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਮੀਟਰ (₹/M²)</div><input type="text" inputmode="decimal" id="p_sqMeter" class="input-val" placeholder="0" oninput="calculatePrice('sqMeter', this.value)"></div>
+            <div class="card"><div class="label">ਰੇਟ ਪ੍ਰਤੀ ਕਿ.ਮੀ. (₹/Km²)</div><input type="text" inputmode="decimal" id="p_sqKm" class="input-val" placeholder="0" oninput="calculatePrice('sqKm', this.value)"></div>
+        </div>
+        
+        <button class="btn-reset" onclick="resetPrice()">ਸਾਫ ਕਰੋ (Reset Price)</button>
+    </div>
 
     <div class="footer">
-        <!-- Profile Picture: Using placeholder for preview, real one on upload -->
         <img src="profile.jpg" alt="Inderjeet Singh" class="profile-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
-        
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p class="contact">Contact - 94644-91806</p>
-        <span class="version">Version 3.1</span>
+        <span class="version">Version 4.1</span>
     </div>
 </div>
 
@@ -235,7 +282,6 @@
         window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
     }
 
-    // Logic
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
@@ -255,36 +301,42 @@
     }
     function closeBanner() { installBanner.style.display = 'none'; }
 
+    // Constants
     const RATES = { 
-        marla: 272.25,      // Govt Revenue Marla (Standard)
-        urbanMarla: 225,    // Urban Marla (25 Gaj * 9 SqFt)
-        kanal: 5445, 
-        killa: 43560, 
-        vigha: 10890, 
-        gaj: 9,             // Standard Gaj (Sq Yard)
-        sqMeter: 10.7639, 
-        sqKm: 10763910.42, 
-        sqFt: 1, 
-        sqKaram: 30.25 
+        marla: 272.25, kanal: 5445, killa: 43560, vigha: 10890, 
+        gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, sqFt: 1, sqKaram: 30.25 
     };
     const METER_TO_FEET = 3.28084;
+    
+    // Elements
     const inputs = { 
-        killa: document.getElementById('killa'), 
-        vigha: document.getElementById('vigha'), 
-        kanal: document.getElementById('kanal'), 
-        marla: document.getElementById('marla'), 
-        gaj: document.getElementById('gaj'), 
-        urbanGaj: document.getElementById('urbanGaj'), 
-        urbanMarla: document.getElementById('urbanMarla'),
-        sqFt: document.getElementById('sqFt'), 
-        sqMeter: document.getElementById('sqMeter'), 
-        sqKm: document.getElementById('sqKm') 
+        killa: document.getElementById('killa'), vigha: document.getElementById('vigha'), 
+        kanal: document.getElementById('kanal'), marla: document.getElementById('marla'), 
+        gaj: document.getElementById('gaj'), sqFt: document.getElementById('sqFt'), 
+        sqMeter: document.getElementById('sqMeter'), sqKm: document.getElementById('sqKm') 
     };
+    const priceInputs = {
+        killa: document.getElementById('p_killa'), vigha: document.getElementById('p_vigha'),
+        kanal: document.getElementById('p_kanal'), marla: document.getElementById('p_marla'),
+        gaj: document.getElementById('p_gaj'), sqFt: document.getElementById('p_sqFt'),
+        sqMeter: document.getElementById('p_sqMeter'), sqKm: document.getElementById('p_sqKm')
+    };
+
     const karamInputs = { length: document.getElementById('karamLength'), width: document.getElementById('karamWidth') };
     const feetInputs = { length: document.getElementById('feetLength'), width: document.getElementById('feetWidth') };
     const meterInputs = { length: document.getElementById('meterLength'), width: document.getElementById('meterWidth') };
     const triInputs = { a: document.getElementById('triA'), b: document.getElementById('triB'), c: document.getElementById('triC') };
 
+    // TAB LOGIC
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById('tab-' + tabName).classList.add('active');
+        document.getElementById('btn-' + tabName).classList.add('active');
+    }
+
+    // AREA LOGIC
     const fmt = (val, fixed) => val === '' ? '' : parseFloat(val.toFixed(fixed));
 
     function updateAllFields(inSqFt, sourceKey = null) {
@@ -295,8 +347,6 @@
         if (sourceKey !== 'marla') inputs.marla.value = fmt(inSqFt / RATES.marla, 4);
         if (sourceKey !== 'vigha') inputs.vigha.value = fmt(inSqFt / RATES.vigha, 4);
         if (sourceKey !== 'gaj') inputs.gaj.value = fmt(inSqFt / RATES.gaj, 2);
-        if (sourceKey !== 'urbanGaj') inputs.urbanGaj.value = fmt(inSqFt / RATES.gaj, 2);
-        if (sourceKey !== 'urbanMarla') inputs.urbanMarla.value = fmt(inSqFt / RATES.urbanMarla, 4);
         if (sourceKey !== 'sqMeter') inputs.sqMeter.value = fmt(inSqFt / RATES.sqMeter, 2);
         if (sourceKey !== 'sqKm') inputs.sqKm.value = fmt(inSqFt / RATES.sqKm, 7);
     }
@@ -304,16 +354,67 @@
     function calculate(unit, value) {
         clearDims();
         if (value === '') { updateAllFields('', unit); return; }
-        if (value === '.') return;
         let numValue = parseFloat(value);
         if (isNaN(numValue)) numValue = 0;
-        
-        let rate = RATES[unit];
-        if (unit === 'urbanGaj') rate = RATES.gaj;
-
-        updateAllFields(numValue * rate, unit);
+        updateAllFields(numValue * RATES[unit], unit);
     }
 
+    // PRICE LOGIC WITH COMMAS
+    // Helper to format numbers with Indian comma system
+    function formatMoney(num) {
+        if (!num && num !== 0) return '';
+        // toLocaleString('en-IN') adds commas nicely (e.g. 1,00,000)
+        // maximumFractionDigits: 2 to keep it clean like money
+        return Number(num).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    }
+
+    // Helper to parse comma separated string back to number
+    function parseMoney(str) {
+        if (!str) return '';
+        // Remove all commas
+        return parseFloat(str.replace(/,/g, ''));
+    }
+
+    function updatePriceFields(pricePerSqFt, sourceKey = null) {
+        if (pricePerSqFt === '') { Object.keys(priceInputs).forEach(k => { if (k !== sourceKey) priceInputs[k].value = ''; }); return; }
+        
+        // We only format the fields that are NOT the one being typed in
+        // to avoid cursor jumping issues.
+        const setVal = (key, val) => {
+            if (key !== sourceKey) {
+                priceInputs[key].value = formatMoney(val);
+            }
+        };
+
+        setVal('sqFt', pricePerSqFt);
+        setVal('killa', pricePerSqFt * RATES.killa);
+        setVal('vigha', pricePerSqFt * RATES.vigha);
+        setVal('kanal', pricePerSqFt * RATES.kanal);
+        setVal('marla', pricePerSqFt * RATES.marla);
+        setVal('gaj', pricePerSqFt * RATES.gaj);
+        setVal('sqMeter', pricePerSqFt * RATES.sqMeter);
+        setVal('sqKm', pricePerSqFt * RATES.sqKm);
+    }
+
+    function calculatePrice(unit, value) {
+        // We take the raw string 'value' which might contain commas if the user typed them
+        // But mostly we care about cleaning it first
+        if (value === '') { updatePriceFields('', unit); return; }
+        
+        let numValue = parseMoney(value);
+        if (isNaN(numValue)) return;
+
+        // Calculate Price Per Sq Ft first
+        // Formula: Price_Per_SqFt = Input_Price / Area_Of_Input_Unit
+        let pricePerSqFt = numValue / RATES[unit];
+        updatePriceFields(pricePerSqFt, unit);
+    }
+
+    function resetPrice() {
+        Object.values(priceInputs).forEach(input => input.value = '');
+    }
+
+    // DIMS Logic
     function clearDims(exclude = '') {
         if (exclude !== 'feet') { feetInputs.length.value = ''; feetInputs.width.value = ''; }
         if (exclude !== 'meters') { meterInputs.length.value = ''; meterInputs.width.value = ''; }
