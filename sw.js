@@ -1,4 +1,4 @@
-const CACHE_NAME = 'land-calc-v21';
+const CACHE_NAME = 'land-calc-v23';
 
 const REQUIRED_ASSETS = [
   './',
@@ -8,7 +8,8 @@ const REQUIRED_ASSETS = [
 
 const OPTIONAL_ASSETS = [
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './profile.jpg'
 ];
 
 self.addEventListener('install', (event) => {
