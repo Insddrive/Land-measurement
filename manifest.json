@@ -1,4 +1,4 @@
-﻿{
+{
  "name": "Punjabi Land Calculator",
  "short_name": "Land Calc",
  "start_url": "./index.html",
@@ -19,3 +19,5 @@
    }
  ]
 }
+
+
