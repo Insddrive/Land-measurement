@@ -1,4 +1,4 @@
-const CACHE_NAME = 'land-calc-v28';
+const CACHE_NAME = 'land-calc-v30'; // Version updated to force refresh
 
 const REQUIRED_ASSETS = [
   './',
@@ -43,3 +43,4 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
