@@ -100,6 +100,7 @@
         body:not(.dark-mode) .c-yellow .input-val { color: #a16207; }
         body:not(.dark-mode) .c-purple .input-val { color: #7e22ce; }
         body:not(.dark-mode) .c-blue .input-val { color: #2563eb; }
+        body:not(.dark-mode) .c-pink .input-val { color: #db2777; }
 
         /* Dims */
         .dims-wrapper { display: flex; flex-direction: column; gap: 12px; margin-top: 5px; }
@@ -183,10 +184,10 @@
         <button class="tab-btn" onclick="switchTab('divide')" id="btn-divide">ਜਮੀਨ ਵੰਡੋ</button>
     </div>
 
-    <!-- 1. RURAL AREA CALCULATOR TAB (RENAMED) -->
+    <!-- 1. RURAL AREA CALCULATOR TAB -->
     <div id="tab-area" class="tab-content active">
         <div class="grid-2">
-            <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
+            <div class="card c-green"><div class="label">ਕਿੱਲਾ (Killa)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
             <div class="card c-orange"><div class="label">ਵਿੱਘਾ (Bigha)</div><input type="number" id="vigha" class="input-val" placeholder="0" oninput="calculate('vigha', this.value)"></div>
         </div>
         <div class="grid-2">
@@ -198,9 +199,10 @@
             <div class="card"><div class="label">ਸਕੇਅਰ ਫੁੱਟ (Ft²)</div><input type="number" id="sqFt" class="input-val" placeholder="0" oninput="calculate('sqFt', this.value)"></div>
         </div>
         <div class="grid-2">
+            <div class="card c-pink"><div class="label">ਹੈਕਟੇਅਰ (Hectare)</div><input type="number" id="hectare" class="input-val" placeholder="0" oninput="calculate('hectare', this.value)"></div>
             <div class="card"><div class="label">ਸਕੇਅਰ ਮੀਟਰ (M²)</div><input type="number" id="sqMeter" class="input-val" placeholder="0" oninput="calculate('sqMeter', this.value)"></div>
-            <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="sqKm" class="input-val" placeholder="0" oninput="calculate('sqKm', this.value)"></div>
         </div>
+        <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="sqKm" class="input-val" placeholder="0" oninput="calculate('sqKm', this.value)"></div>
 
         <!-- Dimensions (Rural) -->
         <div class="dims-wrapper">
@@ -253,14 +255,14 @@
         <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset Rural)</button>
     </div>
 
-    <!-- 2. URBAN AREA CALCULATOR TAB (NEW) -->
+    <!-- 2. URBAN AREA CALCULATOR TAB -->
     <div id="tab-urban" class="tab-content">
         <div style="padding:10px; background:rgba(234, 88, 12, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
              <p style="font-size:0.9rem; color:#ea580c; font-weight:700;">ਸ਼ਹਿਰੀ ਹਿਸਾਬ: 1 ਮਰਲਾ = 225 ਸਕੇਅਰ ਫੁੱਟ</p>
         </div>
 
         <div class="grid-2">
-            <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="u_killa" class="input-val" placeholder="0" oninput="calculateUrban('killa', this.value)"></div>
+            <div class="card c-green"><div class="label">ਕਿੱਲਾ (Killa)</div><input type="number" id="u_killa" class="input-val" placeholder="0" oninput="calculateUrban('killa', this.value)"></div>
             <div class="card c-orange"><div class="label">ਵਿੱਘਾ (Bigha)</div><input type="number" id="u_vigha" class="input-val" placeholder="0" oninput="calculateUrban('vigha', this.value)"></div>
         </div>
         <div class="grid-2">
@@ -270,6 +272,10 @@
         <div class="grid-2">
             <div class="card c-purple"><div class="label">ਗਜ (Gaj)</div><input type="number" id="u_gaj" class="input-val" placeholder="0" oninput="calculateUrban('gaj', this.value)"></div>
             <div class="card"><div class="label">ਸਕੇਅਰ ਫੁੱਟ (Ft²)</div><input type="number" id="u_sqFt" class="input-val" placeholder="0" oninput="calculateUrban('sqFt', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card c-blue"><div class="label">ਏਕੜ (Acre)</div><input type="number" id="u_acre" class="input-val" placeholder="0" oninput="calculateUrban('acre', this.value)"></div>
+            <div class="card c-pink"><div class="label">ਹੈਕਟੇਅਰ (Hectare)</div><input type="number" id="u_hectare" class="input-val" placeholder="0" oninput="calculateUrban('hectare', this.value)"></div>
         </div>
         <div class="grid-2">
             <div class="card"><div class="label">ਸਕੇਅਰ ਮੀਟਰ (M²)</div><input type="number" id="u_sqMeter" class="input-val" placeholder="0" oninput="calculateUrban('sqMeter', this.value)"></div>
@@ -401,7 +407,7 @@
         <img src="profile.jpg" alt="Inderjeet Singh" class="profile-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p class="contact">Contact - 94644-91806</p>
-        <span class="version">Version 5.1</span>
+        <span class="version">Version 5.3</span>
     </div>
 </div>
 
@@ -441,7 +447,7 @@
     // RURAL CONSTANTS (Original)
     const RATES = { 
         marla: 272.25, kanal: 5445, killa: 43560, vigha: 10890, 
-        gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, sqFt: 1, sqKaram: 30.25 
+        gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, hectare: 107639.1042, sqFt: 1, sqKaram: 30.25 
     };
 
     // URBAN CONSTANTS (New: 1 Marla = 225 Sq Ft)
@@ -449,29 +455,33 @@
         marla: 225, 
         kanal: 4500, // 20 * 225
         killa: 36000, // 160 * 225 (8 Kanal)
-        vigha: 9000, // Approx 1/4th of Killa ratio used in previous tab, or 40 marlas
+        acre: 43560, // International Standard (Different from Urban Killa)
+        vigha: 9000, 
         gaj: 9, 
         sqMeter: 10.7639, 
-        sqKm: 10763910.42, 
+        sqKm: 10763910.42,
+        hectare: 107639.1042, // International Standard
         sqFt: 1, 
         sqKaram: 30.25 
     };
 
     const METER_TO_FEET = 3.28084;
     
-    // Rural Inputs
+    // Rural Inputs (Removed Acre)
     const inputs = { 
         killa: document.getElementById('killa'), vigha: document.getElementById('vigha'), 
         kanal: document.getElementById('kanal'), marla: document.getElementById('marla'), 
         gaj: document.getElementById('gaj'), sqFt: document.getElementById('sqFt'), 
+        hectare: document.getElementById('hectare'),
         sqMeter: document.getElementById('sqMeter'), sqKm: document.getElementById('sqKm') 
     };
 
-    // Urban Inputs
+    // Urban Inputs (Kept Acre)
     const urbanInputs = { 
         killa: document.getElementById('u_killa'), vigha: document.getElementById('u_vigha'), 
         kanal: document.getElementById('u_kanal'), marla: document.getElementById('u_marla'), 
         gaj: document.getElementById('u_gaj'), sqFt: document.getElementById('u_sqFt'), 
+        acre: document.getElementById('u_acre'), hectare: document.getElementById('u_hectare'),
         sqMeter: document.getElementById('u_sqMeter'), sqKm: document.getElementById('u_sqKm') 
     };
 
@@ -517,6 +527,8 @@
         if (sourceKey !== 'marla') inputs.marla.value = fmt(inSqFt / RATES.marla, 4);
         if (sourceKey !== 'vigha') inputs.vigha.value = fmt(inSqFt / RATES.vigha, 4);
         if (sourceKey !== 'gaj') inputs.gaj.value = fmt(inSqFt / RATES.gaj, 2);
+        // Removed Acre update here as element is gone
+        if (sourceKey !== 'hectare') inputs.hectare.value = fmt(inSqFt / RATES.hectare, 5);
         if (sourceKey !== 'sqMeter') inputs.sqMeter.value = fmt(inSqFt / RATES.sqMeter, 2);
         if (sourceKey !== 'sqKm') inputs.sqKm.value = fmt(inSqFt / RATES.sqKm, 7);
     }
@@ -609,6 +621,8 @@
         if (sourceKey !== 'marla') urbanInputs.marla.value = fmt(inSqFt / URBAN_RATES.marla, 4);
         if (sourceKey !== 'vigha') urbanInputs.vigha.value = fmt(inSqFt / URBAN_RATES.vigha, 4);
         if (sourceKey !== 'gaj') urbanInputs.gaj.value = fmt(inSqFt / URBAN_RATES.gaj, 2);
+        if (sourceKey !== 'acre') urbanInputs.acre.value = fmt(inSqFt / URBAN_RATES.acre, 4);
+        if (sourceKey !== 'hectare') urbanInputs.hectare.value = fmt(inSqFt / URBAN_RATES.hectare, 5);
         if (sourceKey !== 'sqMeter') urbanInputs.sqMeter.value = fmt(inSqFt / URBAN_RATES.sqMeter, 2);
         if (sourceKey !== 'sqKm') urbanInputs.sqKm.value = fmt(inSqFt / URBAN_RATES.sqKm, 7);
     }
@@ -777,4 +791,5 @@
 
 </body>
 </html>
+
 
