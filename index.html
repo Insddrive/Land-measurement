@@ -15,6 +15,7 @@
     <style>
         :root {
             --primary: #15803d; 
+            --urban-primary: #ea580c; /* Orange for Urban Tab */
             --bg-color: #eff6ff;
             --card-bg: #ffffff;
             --text-main: #1e293b;
@@ -29,6 +30,7 @@
 
         body.dark-mode {
             --primary: #166534;
+            --urban-primary: #9a3412;
             --bg-color: #111827;
             --card-bg: #1f2937;
             --text-main: #f3f4f6;
@@ -71,6 +73,7 @@
         
         /* Specific Colors for Tabs */
         #btn-area.active { background: var(--primary); }
+        #btn-urban.active { background: var(--urban-primary); box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); }
         #btn-price.active { background: #7e22ce; box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3); }
         #btn-divide.active { background: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
 
@@ -106,6 +109,7 @@
         
         /* Colored Headers */
         .header-green { background-color: #15803d; }
+        .header-urban { background-color: #ea580c; }
         .header-blue { background-color: #2563eb; }
         .header-purple { background-color: #7e22ce; }
         .header-pink { background-color: #be185d; }
@@ -173,12 +177,13 @@
 
     <!-- Tab Switcher -->
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('area')" id="btn-area">ਜਮੀਨ ਮਿਣਤੀ</button>
+        <button class="tab-btn active" onclick="switchTab('area')" id="btn-area">ਪੇਂਡੂ ਜ਼ਮੀਨ ਮਿਣਤੀ</button>
+        <button class="tab-btn" onclick="switchTab('urban')" id="btn-urban">ਸ਼ਹਿਰੀ ਜਗ੍ਹਾ ਮਿਣਤੀ</button>
         <button class="tab-btn" onclick="switchTab('price')" id="btn-price">ਰੇਟ ਪਤਾ ਕਰੋ</button>
         <button class="tab-btn" onclick="switchTab('divide')" id="btn-divide">ਜਮੀਨ ਵੰਡੋ</button>
     </div>
 
-    <!-- 1. AREA CALCULATOR TAB -->
+    <!-- 1. RURAL AREA CALCULATOR TAB (RENAMED) -->
     <div id="tab-area" class="tab-content active">
         <div class="grid-2">
             <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="killa" class="input-val" placeholder="0" oninput="calculate('killa', this.value)"></div>
@@ -197,7 +202,7 @@
             <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="sqKm" class="input-val" placeholder="0" oninput="calculate('sqKm', this.value)"></div>
         </div>
 
-        <!-- Dimensions -->
+        <!-- Dimensions (Rural) -->
         <div class="dims-wrapper">
             <!-- Feet -->
             <div class="dim-box">
@@ -245,10 +250,84 @@
             </div>
         </div>
         
-        <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset Area)</button>
+        <button class="btn-reset" onclick="resetAll()">ਸਾਫ ਕਰੋ (Reset Rural)</button>
     </div>
 
-    <!-- 2. PRICE CALCULATOR TAB -->
+    <!-- 2. URBAN AREA CALCULATOR TAB (NEW) -->
+    <div id="tab-urban" class="tab-content">
+        <div style="padding:10px; background:rgba(234, 88, 12, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
+             <p style="font-size:0.9rem; color:#ea580c; font-weight:700;">ਸ਼ਹਿਰੀ ਹਿਸਾਬ: 1 ਮਰਲਾ = 225 ਸਕੇਅਰ ਫੁੱਟ</p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card c-green"><div class="label">ਕਿੱਲਾ (Acres)</div><input type="number" id="u_killa" class="input-val" placeholder="0" oninput="calculateUrban('killa', this.value)"></div>
+            <div class="card c-orange"><div class="label">ਵਿੱਘਾ (Bigha)</div><input type="number" id="u_vigha" class="input-val" placeholder="0" oninput="calculateUrban('vigha', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card c-orange"><div class="label">ਕਨਾਲ (Kanal)</div><input type="number" id="u_kanal" class="input-val" placeholder="0" oninput="calculateUrban('kanal', this.value)"></div>
+            <div class="card c-yellow"><div class="label">ਮਰਲਾ (Marla)</div><input type="number" id="u_marla" class="input-val" placeholder="0" oninput="calculateUrban('marla', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card c-purple"><div class="label">ਗਜ (Gaj)</div><input type="number" id="u_gaj" class="input-val" placeholder="0" oninput="calculateUrban('gaj', this.value)"></div>
+            <div class="card"><div class="label">ਸਕੇਅਰ ਫੁੱਟ (Ft²)</div><input type="number" id="u_sqFt" class="input-val" placeholder="0" oninput="calculateUrban('sqFt', this.value)"></div>
+        </div>
+        <div class="grid-2">
+            <div class="card"><div class="label">ਸਕੇਅਰ ਮੀਟਰ (M²)</div><input type="number" id="u_sqMeter" class="input-val" placeholder="0" oninput="calculateUrban('sqMeter', this.value)"></div>
+            <div class="card"><div class="label">ਸਕੇਅਰ ਕਿ.ਮੀ. (Km²)</div><input type="number" id="u_sqKm" class="input-val" placeholder="0" oninput="calculateUrban('sqKm', this.value)"></div>
+        </div>
+
+        <!-- Dimensions (Urban) -->
+        <div class="dims-wrapper">
+            <!-- Feet -->
+            <div class="dim-box">
+                <div class="dim-header header-urban"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/></svg> ਫੁੱਟਾਂ ਰਾਹੀਂ (By Feet)</div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>ਲੰਬਾਈ (Ft)</label><input type="number" id="u_feetLength" class="dim-input" placeholder="0" oninput="calculateUrbanFeet()"></div>
+                    <div class="x-sym">×</div>
+                    <div class="dim-col"><label>ਚੌੜਾਈ (Ft)</label><input type="number" id="u_feetWidth" class="dim-input" placeholder="0" oninput="calculateUrbanFeet()"></div>
+                </div>
+            </div>
+            <!-- Meters -->
+            <div class="dim-box">
+                <div class="dim-header header-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> ਮੀਟਰਾਂ ਰਾਹੀਂ (By Meters)</div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>ਲੰਬਾਈ (M)</label><input type="number" id="u_meterLength" class="dim-input" placeholder="0" oninput="calculateUrbanMeters()"></div>
+                    <div class="x-sym">×</div>
+                    <div class="dim-col"><label>ਚੌੜਾਈ (M)</label><input type="number" id="u_meterWidth" class="dim-input" placeholder="0" oninput="calculateUrbanMeters()"></div>
+                </div>
+            </div>
+            <!-- Karams -->
+            <div class="dim-box">
+                <div class="dim-header header-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 11 3.8 11 8c0 1.25-.76 2.08-1.42 3"/></svg> ਕਰਮਾਂ ਰਾਹੀਂ (By Karams) <span style="font-weight:400; margin-left:auto; font-size:0.7rem; opacity:0.9">1K = 5.5ft</span></div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>ਲੰਬਾਈ (K)</label><input type="number" id="u_karamLength" class="dim-input" placeholder="0" oninput="calculateUrbanKarams()"></div>
+                    <div class="x-sym">×</div>
+                    <div class="dim-col"><label>ਚੌੜਾਈ (K)</label><input type="number" id="u_karamWidth" class="dim-input" placeholder="0" oninput="calculateUrbanKarams()"></div>
+                </div>
+            </div>
+            <!-- Triangle -->
+            <div class="dim-box">
+                <div class="dim-header header-pink">
+                    <div style="display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18L12 4z"/></svg> ਤਿਕੋਣੀ ਜ਼ਮੀਨ</div>
+                    <select id="u_triUnit" class="unit-select" onchange="updateUrbanTriLabels(); calculateUrbanTriangle();">
+                        <option value="feet">ਫੁੱਟ (Ft)</option>
+                        <option value="meters">ਮੀਟਰ (M)</option>
+                        <option value="karams">ਕਰਮ (K)</option>
+                    </select>
+                </div>
+                <div class="dim-row">
+                    <div class="dim-col"><label>Side A <span class="u_unit-label">Ft</span></label><input type="number" id="u_triA" class="dim-input" placeholder="0" oninput="calculateUrbanTriangle()"></div>
+                    <div class="dim-col"><label>Side B <span class="u_unit-label">Ft</span></label><input type="number" id="u_triB" class="dim-input" placeholder="0" oninput="calculateUrbanTriangle()"></div>
+                    <div class="dim-col"><label>Side C <span class="u_unit-label">Ft</span></label><input type="number" id="u_triC" class="dim-input" placeholder="0" oninput="calculateUrbanTriangle()"></div>
+                </div>
+                <div id="u_triError" class="error-msg">ਭੁਜਾਵਾਂ ਸਹੀ ਨਹੀਂ ਹਨ (Invalid Triangle)</div>
+            </div>
+        </div>
+        
+        <button class="btn-reset" onclick="resetUrbanAll()" style="background:#ea580c;">ਸਾਫ ਕਰੋ (Reset Urban)</button>
+    </div>
+
+    <!-- 3. PRICE CALCULATOR TAB -->
     <div id="tab-price" class="tab-content">
         <div style="padding:10px; background:rgba(126, 34, 206, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
              <p style="font-size:0.9rem; color:#7e22ce; font-weight:700;">ਕਿਸੇ ਇੱਕ ਦਾ ਰੇਟ ਭਰੋ, ਬਾਕੀ ਆਪਣੇ ਆਪ ਆ ਜਾਣਗੇ</p>
@@ -274,7 +353,7 @@
         <button class="btn-reset" onclick="resetPrice()" style="background:#7e22ce;">ਸਾਫ ਕਰੋ (Reset Price)</button>
     </div>
 
-    <!-- 3. LAND DIVIDER TAB -->
+    <!-- 4. LAND DIVIDER TAB -->
     <div id="tab-divide" class="tab-content">
         <div style="padding:10px; background:rgba(2, 132, 199, 0.1); border-radius:12px; margin-bottom:12px; text-align:center;">
              <p style="font-size:0.9rem; color:#0284c7; font-weight:700;">ਕੁੱਲ ਜਮੀਨ ਭਰੋ ਅਤੇ ਹਿੱਸੇਦਾਰ ਦੱਸੋ</p>
@@ -322,7 +401,7 @@
         <img src="profile.jpg" alt="Inderjeet Singh" class="profile-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
         <span class="name">Made By "Inderjeet Singh Talwandi Sabo"</span>
         <p class="contact">Contact - 94644-91806</p>
-        <span class="version">Version 5.0</span>
+        <span class="version">Version 5.1</span>
     </div>
 </div>
 
@@ -359,20 +438,44 @@
     }
     function closeBanner() { installBanner.style.display = 'none'; }
 
-    // Constants
+    // RURAL CONSTANTS (Original)
     const RATES = { 
         marla: 272.25, kanal: 5445, killa: 43560, vigha: 10890, 
         gaj: 9, sqMeter: 10.7639, sqKm: 10763910.42, sqFt: 1, sqKaram: 30.25 
     };
+
+    // URBAN CONSTANTS (New: 1 Marla = 225 Sq Ft)
+    const URBAN_RATES = {
+        marla: 225, 
+        kanal: 4500, // 20 * 225
+        killa: 36000, // 160 * 225 (8 Kanal)
+        vigha: 9000, // Approx 1/4th of Killa ratio used in previous tab, or 40 marlas
+        gaj: 9, 
+        sqMeter: 10.7639, 
+        sqKm: 10763910.42, 
+        sqFt: 1, 
+        sqKaram: 30.25 
+    };
+
     const METER_TO_FEET = 3.28084;
     
-    // Elements
+    // Rural Inputs
     const inputs = { 
         killa: document.getElementById('killa'), vigha: document.getElementById('vigha'), 
         kanal: document.getElementById('kanal'), marla: document.getElementById('marla'), 
         gaj: document.getElementById('gaj'), sqFt: document.getElementById('sqFt'), 
         sqMeter: document.getElementById('sqMeter'), sqKm: document.getElementById('sqKm') 
     };
+
+    // Urban Inputs
+    const urbanInputs = { 
+        killa: document.getElementById('u_killa'), vigha: document.getElementById('u_vigha'), 
+        kanal: document.getElementById('u_kanal'), marla: document.getElementById('u_marla'), 
+        gaj: document.getElementById('u_gaj'), sqFt: document.getElementById('u_sqFt'), 
+        sqMeter: document.getElementById('u_sqMeter'), sqKm: document.getElementById('u_sqKm') 
+    };
+
+    // Price Inputs
     const priceInputs = {
         killa: document.getElementById('p_killa'), vigha: document.getElementById('p_vigha'),
         kanal: document.getElementById('p_kanal'), marla: document.getElementById('p_marla'),
@@ -380,10 +483,17 @@
         sqMeter: document.getElementById('p_sqMeter'), sqKm: document.getElementById('p_sqKm')
     };
 
+    // Dimension Inputs (Rural)
     const karamInputs = { length: document.getElementById('karamLength'), width: document.getElementById('karamWidth') };
     const feetInputs = { length: document.getElementById('feetLength'), width: document.getElementById('feetWidth') };
     const meterInputs = { length: document.getElementById('meterLength'), width: document.getElementById('meterWidth') };
     const triInputs = { a: document.getElementById('triA'), b: document.getElementById('triB'), c: document.getElementById('triC') };
+
+    // Dimension Inputs (Urban)
+    const u_karamInputs = { length: document.getElementById('u_karamLength'), width: document.getElementById('u_karamWidth') };
+    const u_feetInputs = { length: document.getElementById('u_feetLength'), width: document.getElementById('u_feetWidth') };
+    const u_meterInputs = { length: document.getElementById('u_meterLength'), width: document.getElementById('u_meterWidth') };
+    const u_triInputs = { a: document.getElementById('u_triA'), b: document.getElementById('u_triB'), c: document.getElementById('u_triC') };
 
     // TAB LOGIC
     function switchTab(tabName) {
@@ -394,9 +504,11 @@
         document.getElementById('btn-' + tabName).classList.add('active');
     }
 
-    // AREA LOGIC
     const fmt = (val, fixed) => val === '' ? '' : parseFloat(val.toFixed(fixed));
 
+    // ==========================================
+    // RURAL LOGIC
+    // ==========================================
     function updateAllFields(inSqFt, sourceKey = null) {
         if (inSqFt === '') { Object.keys(inputs).forEach(k => { if (k !== sourceKey) inputs[k].value = ''; }); return; }
         if (sourceKey !== 'sqFt') inputs.sqFt.value = fmt(inSqFt, 2);
@@ -417,7 +529,171 @@
         updateAllFields(numValue * RATES[unit], unit);
     }
 
+    // Rural Dims
+    function clearDims(exclude = '') {
+        if (exclude !== 'feet') { feetInputs.length.value = ''; feetInputs.width.value = ''; }
+        if (exclude !== 'meters') { meterInputs.length.value = ''; meterInputs.width.value = ''; }
+        if (exclude !== 'karams') { karamInputs.length.value = ''; karamInputs.width.value = ''; }
+        if (exclude !== 'triangle') { triInputs.a.value = ''; triInputs.b.value = ''; triInputs.c.value = ''; document.getElementById('triError').style.display='none'; }
+    }
+
+    function syncDimensions(lenFeet, widFeet, source) {
+        if (source !== 'feet') { if (!isNaN(lenFeet)) feetInputs.length.value = fmt(lenFeet, 2); if (!isNaN(widFeet)) feetInputs.width.value = fmt(widFeet, 2); }
+        if (source !== 'karams') { if (!isNaN(lenFeet)) karamInputs.length.value = fmt(lenFeet / 5.5, 2); if (!isNaN(widFeet)) karamInputs.width.value = fmt(widFeet / 5.5, 2); }
+        if (source !== 'meters') { if (!isNaN(lenFeet)) meterInputs.length.value = fmt(lenFeet / METER_TO_FEET, 2); if (!isNaN(widFeet)) meterInputs.width.value = fmt(widFeet / METER_TO_FEET, 2); }
+    }
+
+    function calculateFeet() { 
+        clearDims('feet');
+        const l = parseFloat(feetInputs.length.value), w = parseFloat(feetInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } else { updateAllFields('', 'feet'); } 
+    }
+    function calculateKarams() { 
+        clearDims('karams');
+        const l = parseFloat(karamInputs.length.value), w = parseFloat(karamInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } else { updateAllFields('', 'karams'); } 
+    }
+    function calculateMeters() { 
+        clearDims('meters');
+        const l = parseFloat(meterInputs.length.value), w = parseFloat(meterInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } else { updateAllFields('', 'meters'); } 
+    }
+
+    function updateTriLabels() {
+        const unit = document.getElementById('triUnit').value;
+        const labels = document.querySelectorAll('.unit-label');
+        let text = 'Ft';
+        if (unit === 'meters') text = 'M';
+        if (unit === 'karams') text = 'K';
+        labels.forEach(l => l.textContent = text);
+    }
+
+    function calculateTriangle() {
+        clearDims('triangle');
+        const unit = document.getElementById('triUnit').value;
+        const a = parseFloat(triInputs.a.value);
+        const b = parseFloat(triInputs.b.value);
+        const c = parseFloat(triInputs.c.value);
+        const err = document.getElementById('triError');
+
+        if (!isNaN(a) && !isNaN(b) && !isNaN(c)) {
+            if (a + b > c && a + c > b && b + c > a) {
+                const s = (a + b + c) / 2;
+                let area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+                
+                if (unit === 'meters') { area = area * (METER_TO_FEET * METER_TO_FEET); } 
+                else if (unit === 'karams') { area = area * 30.25; }
+                
+                updateAllFields(area, 'triangle');
+                err.style.display = 'none';
+            } else {
+                updateAllFields('', 'triangle');
+                err.style.display = 'block';
+            }
+        } else {
+            updateAllFields('', 'triangle');
+            err.style.display = 'none';
+        }
+    }
+
+    function resetAll() { Object.values(inputs).forEach(input => input.value = ''); clearDims(); }
+
+    // ==========================================
+    // URBAN LOGIC (NEW)
+    // ==========================================
+    function updateUrbanAllFields(inSqFt, sourceKey = null) {
+        if (inSqFt === '') { Object.keys(urbanInputs).forEach(k => { if (k !== sourceKey) urbanInputs[k].value = ''; }); return; }
+        if (sourceKey !== 'sqFt') urbanInputs.sqFt.value = fmt(inSqFt, 2);
+        if (sourceKey !== 'killa') urbanInputs.killa.value = fmt(inSqFt / URBAN_RATES.killa, 4);
+        if (sourceKey !== 'kanal') urbanInputs.kanal.value = fmt(inSqFt / URBAN_RATES.kanal, 4);
+        if (sourceKey !== 'marla') urbanInputs.marla.value = fmt(inSqFt / URBAN_RATES.marla, 4);
+        if (sourceKey !== 'vigha') urbanInputs.vigha.value = fmt(inSqFt / URBAN_RATES.vigha, 4);
+        if (sourceKey !== 'gaj') urbanInputs.gaj.value = fmt(inSqFt / URBAN_RATES.gaj, 2);
+        if (sourceKey !== 'sqMeter') urbanInputs.sqMeter.value = fmt(inSqFt / URBAN_RATES.sqMeter, 2);
+        if (sourceKey !== 'sqKm') urbanInputs.sqKm.value = fmt(inSqFt / URBAN_RATES.sqKm, 7);
+    }
+
+    function calculateUrban(unit, value) {
+        clearUrbanDims();
+        if (value === '') { updateUrbanAllFields('', unit); return; }
+        let numValue = parseFloat(value);
+        if (isNaN(numValue)) numValue = 0;
+        updateUrbanAllFields(numValue * URBAN_RATES[unit], unit);
+    }
+
+    // Urban Dims
+    function clearUrbanDims(exclude = '') {
+        if (exclude !== 'feet') { u_feetInputs.length.value = ''; u_feetInputs.width.value = ''; }
+        if (exclude !== 'meters') { u_meterInputs.length.value = ''; u_meterInputs.width.value = ''; }
+        if (exclude !== 'karams') { u_karamInputs.length.value = ''; u_karamInputs.width.value = ''; }
+        if (exclude !== 'triangle') { u_triInputs.a.value = ''; u_triInputs.b.value = ''; u_triInputs.c.value = ''; document.getElementById('u_triError').style.display='none'; }
+    }
+
+    function syncUrbanDimensions(lenFeet, widFeet, source) {
+        if (source !== 'feet') { if (!isNaN(lenFeet)) u_feetInputs.length.value = fmt(lenFeet, 2); if (!isNaN(widFeet)) u_feetInputs.width.value = fmt(widFeet, 2); }
+        if (source !== 'karams') { if (!isNaN(lenFeet)) u_karamInputs.length.value = fmt(lenFeet / 5.5, 2); if (!isNaN(widFeet)) u_karamInputs.width.value = fmt(widFeet / 5.5, 2); }
+        if (source !== 'meters') { if (!isNaN(lenFeet)) u_meterInputs.length.value = fmt(lenFeet / METER_TO_FEET, 2); if (!isNaN(widFeet)) u_meterInputs.width.value = fmt(widFeet / METER_TO_FEET, 2); }
+    }
+
+    function calculateUrbanFeet() { 
+        clearUrbanDims('feet');
+        const l = parseFloat(u_feetInputs.length.value), w = parseFloat(u_feetInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { updateUrbanAllFields(l * w, 'feet'); syncUrbanDimensions(l, w, 'feet'); } else { updateUrbanAllFields('', 'feet'); } 
+    }
+    function calculateUrbanKarams() { 
+        clearUrbanDims('karams');
+        const l = parseFloat(u_karamInputs.length.value), w = parseFloat(u_karamInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateUrbanAllFields(lF * wF, 'karams'); syncUrbanDimensions(lF, wF, 'karams'); } else { updateUrbanAllFields('', 'karams'); } 
+    }
+    function calculateUrbanMeters() { 
+        clearUrbanDims('meters');
+        const l = parseFloat(u_meterInputs.length.value), w = parseFloat(u_meterInputs.width.value); 
+        if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateUrbanAllFields(lF * wF, 'meters'); syncUrbanDimensions(lF, wF, 'meters'); } else { updateUrbanAllFields('', 'meters'); } 
+    }
+
+    function updateUrbanTriLabels() {
+        const unit = document.getElementById('u_triUnit').value;
+        const labels = document.querySelectorAll('.u_unit-label');
+        let text = 'Ft';
+        if (unit === 'meters') text = 'M';
+        if (unit === 'karams') text = 'K';
+        labels.forEach(l => l.textContent = text);
+    }
+
+    function calculateUrbanTriangle() {
+        clearUrbanDims('triangle');
+        const unit = document.getElementById('u_triUnit').value;
+        const a = parseFloat(u_triInputs.a.value);
+        const b = parseFloat(u_triInputs.b.value);
+        const c = parseFloat(u_triInputs.c.value);
+        const err = document.getElementById('u_triError');
+
+        if (!isNaN(a) && !isNaN(b) && !isNaN(c)) {
+            if (a + b > c && a + c > b && b + c > a) {
+                const s = (a + b + c) / 2;
+                let area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+                
+                if (unit === 'meters') { area = area * (METER_TO_FEET * METER_TO_FEET); } 
+                else if (unit === 'karams') { area = area * 30.25; }
+                
+                updateUrbanAllFields(area, 'triangle');
+                err.style.display = 'none';
+            } else {
+                updateUrbanAllFields('', 'triangle');
+                err.style.display = 'block';
+            }
+        } else {
+            updateUrbanAllFields('', 'triangle');
+            err.style.display = 'none';
+        }
+    }
+
+    function resetUrbanAll() { Object.values(urbanInputs).forEach(input => input.value = ''); clearUrbanDims(); }
+
+
+    // ==========================================
     // PRICE LOGIC WITH COMMAS
+    // ==========================================
     function formatMoney(num) {
         if (!num && num !== 0) return '';
         return Number(num).toLocaleString('en-IN', { maximumFractionDigits: 2 });
@@ -497,78 +773,8 @@
         document.getElementById('div_people').value = '1';
         calculateDivision();
     }
-
-    // DIMS Logic
-    function clearDims(exclude = '') {
-        if (exclude !== 'feet') { feetInputs.length.value = ''; feetInputs.width.value = ''; }
-        if (exclude !== 'meters') { meterInputs.length.value = ''; meterInputs.width.value = ''; }
-        if (exclude !== 'karams') { karamInputs.length.value = ''; karamInputs.width.value = ''; }
-        if (exclude !== 'triangle') { triInputs.a.value = ''; triInputs.b.value = ''; triInputs.c.value = ''; document.getElementById('triError').style.display='none'; }
-    }
-
-    function syncDimensions(lenFeet, widFeet, source) {
-        if (source !== 'feet') { if (!isNaN(lenFeet)) feetInputs.length.value = fmt(lenFeet, 2); if (!isNaN(widFeet)) feetInputs.width.value = fmt(widFeet, 2); }
-        if (source !== 'karams') { if (!isNaN(lenFeet)) karamInputs.length.value = fmt(lenFeet / 5.5, 2); if (!isNaN(widFeet)) karamInputs.width.value = fmt(widFeet / 5.5, 2); }
-        if (source !== 'meters') { if (!isNaN(lenFeet)) meterInputs.length.value = fmt(lenFeet / METER_TO_FEET, 2); if (!isNaN(widFeet)) meterInputs.width.value = fmt(widFeet / METER_TO_FEET, 2); }
-    }
-
-    function calculateFeet() { 
-        clearDims('feet');
-        const l = parseFloat(feetInputs.length.value), w = parseFloat(feetInputs.width.value); 
-        if (!isNaN(l) && !isNaN(w)) { updateAllFields(l * w, 'feet'); syncDimensions(l, w, 'feet'); } else { updateAllFields('', 'feet'); } 
-    }
-    function calculateKarams() { 
-        clearDims('karams');
-        const l = parseFloat(karamInputs.length.value), w = parseFloat(karamInputs.width.value); 
-        if (!isNaN(l) && !isNaN(w)) { const lF = l * 5.5, wF = w * 5.5; updateAllFields(lF * wF, 'karams'); syncDimensions(lF, wF, 'karams'); } else { updateAllFields('', 'karams'); } 
-    }
-    function calculateMeters() { 
-        clearDims('meters');
-        const l = parseFloat(meterInputs.length.value), w = parseFloat(meterInputs.width.value); 
-        if (!isNaN(l) && !isNaN(w)) { const lF = l * METER_TO_FEET, wF = w * METER_TO_FEET; updateAllFields(lF * wF, 'meters'); syncDimensions(lF, wF, 'meters'); } else { updateAllFields('', 'meters'); } 
-    }
-
-    function updateTriLabels() {
-        const unit = document.getElementById('triUnit').value;
-        const labels = document.querySelectorAll('.unit-label');
-        let text = 'Ft';
-        if (unit === 'meters') text = 'M';
-        if (unit === 'karams') text = 'K';
-        labels.forEach(l => l.textContent = text);
-    }
-
-    function calculateTriangle() {
-        clearDims('triangle');
-        const unit = document.getElementById('triUnit').value;
-        const a = parseFloat(triInputs.a.value);
-        const b = parseFloat(triInputs.b.value);
-        const c = parseFloat(triInputs.c.value);
-        const err = document.getElementById('triError');
-
-        if (!isNaN(a) && !isNaN(b) && !isNaN(c)) {
-            if (a + b > c && a + c > b && b + c > a) {
-                const s = (a + b + c) / 2;
-                let area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
-                
-                if (unit === 'meters') { area = area * (METER_TO_FEET * METER_TO_FEET); } 
-                else if (unit === 'karams') { area = area * 30.25; }
-                
-                updateAllFields(area, 'triangle');
-                err.style.display = 'none';
-            } else {
-                updateAllFields('', 'triangle');
-                err.style.display = 'block';
-            }
-        } else {
-            updateAllFields('', 'triangle');
-            err.style.display = 'none';
-        }
-    }
-
-    function resetAll() { Object.values(inputs).forEach(input => input.value = ''); clearDims(); }
 </script>
 
 </body>
 </html>
-
 
